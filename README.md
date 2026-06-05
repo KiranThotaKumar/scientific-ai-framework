@@ -1,5 +1,5 @@
 
-  <p align="center" style="font-size: 200%;">A Neural–Bayesian Framework for Atomic Spectra and Quantum State Modelling with a Natural Language Interface</p>
+  # A Neural–Bayesian Framework for Atomic Spectra and Quantum State Modelling with a Natural Language Interface
 
 ## Overview
 
@@ -15,25 +15,35 @@
 
 
   ## Example Outputs
-  ![Hydrogen Spectrum](images/hydrogen_balmer_forward_model.png) 
-  <p align="center"><small>Figure 1. User input: "Generate Balmer Spectrum"</small></p>
+  <p align="center">
+  <img src="images/hydrogen_balmer_forward_model.png" width="700">
+</p> 
+  <p align="center"><small><b>Figure 1.</b> User input: "Generate Balmer Spectrum"</small></p>
 
   <br><br>
   
-  ![Single Qubit Evolution](images/single_qubit_time_evolution.png) 
-  <p align="center"><small>Figure 2. User input: "Simulate single qubit evolution"</small></p>
+<p align="center">
+  <img src="images/single_qubit_time_evolution.png" width="700">
+</p>
+  <p align="center"><small><b>Figure 2.</b> User input: "Simulate single qubit evolution"</small></p>
   <br><br>
 
-  ![MCMC Inference](images/mcmc_posterior_estimation.png)
-    <p align="center"><small>Figure 3. User input: "Please give single qubit evolution parameters from file synthetic_single_qubit.npz"</small></p>
+  <p align="center">
+  <img src="images/mcmc_posterior_estimation.png" width="700">
+</p>
+    <p align="center"><small><b>Figure 3.</b> User input: "Please give single qubit evolution parameters from file synthetic_single_qubit.npz"</small></p>
   <br><br>
 
-  ![MCMC Inference](images/multi_qubit_energy_spectrun.png)
-    <p align="center"><small>Figure 4. User input: "Please show me two qubit evolution dynamics"</small></p>
+  <p align="center">
+  <img src="images/multi_qubit_energy_spectrun.png" width="700">
+</p>
+    <p align="center"><small><b>Figure 4.</b> User input: "Please show me two qubit evolution dynamics"</small></p>
   <br><br>
 
-  ![End To End Pipeline](images/nlp_to_science_pipeline.PNG)
-<p align="center"><small>Figure 5. NLP to Science Pipeline</small></p>
+  <p align="center">
+  <img src="images/nlp_to_science_pipeline.PNG" width="700">
+</p>
+<p align="center"><small><b>Figure 5.</b> NLP to Science Pipeline</small></p>
   <br><br>
 The framework combines:
 
@@ -94,6 +104,7 @@ to generate synthetic spectra, quantum evolution curves, or measurement probabil
 Given observed data (D), the framework estimates model parameters through posterior inference:
 
 $$
+
 [ 
 p(\theta \mid D) 
 \propto 
@@ -305,6 +316,14 @@ Implemented Operations:
 - Natural Language Query Processing
 
 The framework is under active development and additional scientific domains will be added in future releases.
+
+## Planned Domains
+
+- X-ray spectroscopy
+- Nuclear physics models
+- Additional quantum systems
+- Topological Quantum Systems (Chern Numbers and Topological Invariants)
+- Advanced neural intent models
 
 ---
 
