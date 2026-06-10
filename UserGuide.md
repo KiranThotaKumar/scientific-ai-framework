@@ -45,7 +45,31 @@ pip install -r requirements.txt
 ```
 ---
 Python 3.10 or later is recommended.
-## 3. Running the Framework
+## 3. Model Checkpoint
+
+The Scientific AI Framework uses a trained intent-detection model based on a fine-tuned DistilBERT encoder.
+
+The model checkpoint is distributed separately from the repository and must be downloaded before running the framework.
+
+Download:
+
+```text
+scientific_intent_v1.pt
+```
+
+from the GitHub Releases page.
+
+Place the checkpoint in:
+
+```text
+models/checkpoints/
+```
+
+The current checkpoint size is approximately 260 MB.
+
+After the checkpoint has been downloaded, proceed to the next section and start the framework normally.
+
+## 4. Running the Framework
 
 Start the interactive interface:
 ```
@@ -58,7 +82,7 @@ Enter your query:
 Type a natural language query and press Enter.
 (See below examples)
 ---
-## 4. Hydrogen Examples
+## 5. Hydrogen Examples
 
 ### A.Hydrogen Forward Modelling
 
@@ -84,7 +108,7 @@ Expected result:
 - Corner plots
 - Spectrum fit
 ---
-## 5. Single-Qubit Examples
+## 6. Single-Qubit Examples
 ### A. Single-Qubit Forward Modelling
 
 User Input:
@@ -106,7 +130,7 @@ Expected result:
 - MCMC diagnostics
 - Fit plots
 ---
-## 6. Multi-Qubit Examples
+## 7. Multi-Qubit Examples
 ### A. Multi-Qubit Forward Modelling
 User Input:
 ```
@@ -129,7 +153,7 @@ Expected result:
 - MCMC diagnostics
 - Model fit plots
 
-## 7. Input Files
+## 8. Input Files
 
 Inference workflows require NumPy data files:
 ```
@@ -141,7 +165,7 @@ synthetic_hydrogen_data.npz
 synthetic_single_qubit_data.npz
 synthetic_multi_qubit_data.n
 ```
-## 8. Troubleshooting
+## 9. Troubleshooting
 ### A. Plot Window Does Not Appear
 
 Fix: Ensure a graphical backend is available.
@@ -155,18 +179,18 @@ matplotlib.use("Agg")
 
 Fix: Reinstall dependencies:
 
-## 9. Slow Bayesian Inference
+## 10. Slow Bayesian Inference
 
 Bayesian inference uses MCMC sampling and may require several minutes depending on:
 
 - Number of walkers
 - Number of samples
 - Model complexity
-## 10. Notes
+## 11. Notes
 - Version 0.1-alpha is an experimental release.
 - Interfaces and commands may change in future versions.
 - Neural intent detection is under active development.
 - Additional scientific domains will be added in future releases.
-## 11. Getting Help
+## 12. Getting Help
 
 Please open an issue on GitHub for bug reports, feature requests, or questions.

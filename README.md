@@ -279,6 +279,12 @@ pip install -r requirements.txt
 
 ---
 
+## Model Checkpoint
+
+The trained ScientificIntent model checkpoint is distributed separately through GitHub Releases.
+
+See UserGuide.md for installation and setup instructions.
+
 ## Running
 
 ```bash
