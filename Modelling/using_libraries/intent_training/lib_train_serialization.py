@@ -3,9 +3,13 @@
 import os
 import json
 import torch
+from pathlib import Path
 from using_libraries.intent_training.scientific_intent_model import ScientificIntentModel
 
-def save_checkpoint(model, stats, model_confg, domain_action_modes_config, path="scientific_intent_v1.pt"):
+def save_checkpoint(model, stats, model_confg, domain_action_modes_config, path="models/checkpoints/scientific_intent_v1.pt"):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
     checkpoint = {
         "model_state_dict": model.state_dict(),
         "normalization_stats": stats,

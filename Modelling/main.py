@@ -13,9 +13,16 @@ def print_banner():
 
 def main():
 
-    engine = ScientificAIEngine(
-        "scientific_intent_v1.pt"
+    from pathlib import Path
+
+    CHECKPOINT_PATH = (
+        Path(__file__).resolve().parent
+        / "models"
+        / "checkpoints"
+        / "scientific_intent_v1.pt"
     )
+
+    engine = ScientificAIEngine(str(CHECKPOINT_PATH))
     print_banner()
     
     while True:
