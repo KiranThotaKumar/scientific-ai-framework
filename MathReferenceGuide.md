@@ -1,3 +1,157 @@
+- [1. Introduction](#1-introduction)
+  - [1.1 Purpose of the Mathematical Framework](#11-purpose-of-the-mathematical-framework)
+  - [1.2 Relationship Between Mathematical Models and Software Architecture](#12-relationship-between-mathematical-models-and-software-architecture)
+  - [1.3 Mathematical Philosophy](#13-mathematical-philosophy)
+  - [1.4 General Mathematical Formulation](#14-general-mathematical-formulation)
+  - [1.5 Assumptions](#15-assumptions)
+  - [1.6 Notation](#16-notation)
+- [2. Probability and Bayesian Inference](#2-probability-and-bayesian-inference)
+  - [2.1 Overview](#21-overview)
+  - [2.2 Bayes' Theorem](#22-bayes-theorem)
+  - [2.3 Prior Distributions](#23-prior-distributions)
+  - [2.4 Likelihood Functions](#24-likelihood-functions)
+    - [Gaussian Noise Model](#gaussian-noise-model)
+  - [2.5 Posterior Distribution](#25-posterior-distribution)
+  - [2.6 Maximum a Posteriori (MAP) Estimation](#26-maximum-a-posteriori-map-estimation)
+  - [2.7 Full Bayesian Inference](#27-full-bayesian-inference)
+  - [2.8 Application Within the Framework](#28-application-within-the-framework)
+- [3. Markov Chain Monte Carlo (MCMC)](#3-markov-chain-monte-carlo-mcmc)
+  - [3.1 Overview](#31-overview)
+  - [3.2 Sampling Objective](#32-sampling-objective)
+  - [3.3 Markov Chains](#33-markov-chains)
+  - [3.4 Ensemble Sampler Principles](#34-ensemble-sampler-principles)
+  - [3.5 Acceptance Probability](#35-acceptance-probability)
+  - [3.6 Burn-in](#36-burn-in)
+  - [3.7 Convergence and Mixing](#37-convergence-and-mixing)
+  - [3.8 Posterior Summaries](#38-posterior-summaries)
+  - [3.9 Application Within the Framework](#39-application-within-the-framework)
+- [4. Forward Modelling](#4-forward-modelling)
+  - [4.1 Overview](#41-overview)
+  - [4.2 General Mathematical Formulation](#42-general-mathematical-formulation)
+  - [4.3 Deterministic Nature of the Forward Model](#43-deterministic-nature-of-the-forward-model)
+  - [4.4 Forward Models in Bayesian Inference](#44-forward-models-in-bayesian-inference)
+  - [4.5 Noise Assumptions](#45-noise-assumptions)
+    - [Gaussian Noise Model](#gaussian-noise-model-1)
+    - [Independence Assumption](#independence-assumption)
+  - [4.6 Synthetic Data Generation](#46-synthetic-data-generation)
+  - [4.7 Role of Synthetic Data in the Framework](#47-role-of-synthetic-data-in-the-framework)
+  - [4.8 Computational Workflow](#48-computational-workflow)
+- [5. Hydrogen Spectrum Model](#5-hydrogen-spectrum-model)
+  - [5.1 Overview](#51-overview)
+  - [5.2 Spectral Line Representation](#52-spectral-line-representation)
+  - [5.3 Instrument Resolution Parameter](#53-instrument-resolution-parameter)
+  - [5.4 Background Contribution](#54-background-contribution)
+  - [5.5 Complete Forward Model](#55-complete-forward-model)
+  - [5.6 Model Parameterization](#56-model-parameterization)
+  - [5.7 Synthetic Spectrum Generation](#57-synthetic-spectrum-generation)
+  - [5.8 Prior Distributions](#58-prior-distributions)
+    - [Parameter Bounds](#parameter-bounds)
+    - [Prior for Global Scale](#prior-for-global-scale)
+    - [Prior for Instrumental Broadening](#prior-for-instrumental-broadening)
+  - [5.9 Likelihood Function](#59-likelihood-function)
+  - [5.10 Posterior Distribution](#510-posterior-distribution)
+  - [5.11 Bayesian Parameter Inference](#511-bayesian-parameter-inference)
+  - [5.12 Mapping to Implementation Variables](#512-mapping-to-implementation-variables)
+- [6. Single-Qubit Quantum Dynamics Model](#6-single-qubit-quantum-dynamics-model)
+  - [6.1 Overview](#61-overview)
+  - [6.2 Effective Rabi Frequency](#62-effective-rabi-frequency)
+  - [6.3 Forward Model](#63-forward-model)
+  - [6.4 Model Parameters](#64-model-parameters)
+  - [6.5 Time Grid](#65-time-grid)
+  - [6.6 Synthetic Data Generation](#66-synthetic-data-generation)
+  - [6.7 Noise Model](#67-noise-model)
+  - [6.8 Mapping to Implementation Variables](#68-mapping-to-implementation-variables)
+  - [6.9 Bayesian Parameter Inference](#69-bayesian-parameter-inference)
+  - [6.10 Prior Distributions](#610-prior-distributions)
+    - [Hard Parameter Bounds](#hard-parameter-bounds)
+    - [Exponential Prior for the Decay Constant](#exponential-prior-for-the-decay-constant)
+  - [6.11 Likelihood Function](#611-likelihood-function)
+  - [6.12 Posterior Distribution](#612-posterior-distribution)
+  - [6.13 Posterior Summaries](#613-posterior-summaries)
+    - [Maximum a Posteriori Estimate](#maximum-a-posteriori-estimate)
+    - [Posterior Mean](#posterior-mean)
+  - [6.14 Computational Workflow](#614-computational-workflow)
+- [7. Multi-Qubit Quantum Dynamics Model](#7-multi-qubit-quantum-dynamics-model)
+  - [7.1 Overview](#71-overview)
+  - [7.2 Hilbert Space Representation](#72-hilbert-space-representation)
+  - [7.3 Pauli Operators](#73-pauli-operators)
+  - [7.4 Hamiltonian Construction](#74-hamiltonian-construction)
+  - [7.5 Pairwise Couplings](#75-pairwise-couplings)
+  - [7.6 Total Hamiltonian](#76-total-hamiltonian)
+  - [7.7 Initial Quantum State](#77-initial-quantum-state)
+  - [7.8 Schrödinger Time Evolution](#78-schrödinger-time-evolution)
+  - [7.9 Measurement Observables](#79-measurement-observables)
+  - [7.10 Instrument Model](#710-instrument-model)
+  - [7.11 Spectrum Mode](#711-spectrum-mode)
+  - [7.12 Mapping to Implementation Variables](#712-mapping-to-implementation-variables)
+  - [7.13 Synthetic Data Generation](#713-synthetic-data-generation)
+    - [Hamiltonian Construction](#hamiltonian-construction)
+    - [Initial State Preparation](#initial-state-preparation)
+    - [Observable Construction](#observable-construction)
+    - [Quantum Evolution](#quantum-evolution)
+    - [Measurement Generation](#measurement-generation)
+    - [Deterministic Synthetic Data](#deterministic-synthetic-data)
+    - [Metadata](#metadata)
+  - [7.14 Bayesian Inference](#714-bayesian-inference)
+    - [Multivariate Gaussian Prior](#multivariate-gaussian-prior)
+    - [Likelihood Function](#likelihood-function)
+  - [7.15 Computational Scaling](#715-computational-scaling)
+- [9. Loss Functions Used During Training](#9-loss-functions-used-during-training)
+  - [9.1 Cross-Entropy Loss for Classification](#91-cross-entropy-loss-for-classification)
+  - [9.2 Masked Mean Squared Error](#92-masked-mean-squared-error)
+  - [9.3 Masked Cross-Entropy for Optional Outputs](#93-masked-cross-entropy-for-optional-outputs)
+  - [9.4 Combined Training Objective](#94-combined-training-objective)
+- [10. Regression Normalization](#10-regression-normalization)
+  - [10.1 Computation of Dataset Statistics](#101-computation-of-dataset-statistics)
+  - [10.2 Standardization](#102-standardization)
+  - [10.3 De-normalization](#103-de-normalization)
+  - [10.4 Masked Error Evaluation](#104-masked-error-evaluation)
+  - [10.5 Diagnostic Statistics](#105-diagnostic-statistics)
+- [11. Neural Intent Detection](#11-neural-intent-detection)
+  - [11.1 Character-Level Encoding](#111-character-level-encoding)
+  - [11.2 Embedding Layer](#112-embedding-layer)
+  - [11.3 Recurrent Sequence Encoder](#113-recurrent-sequence-encoder)
+  - [11.4 Shared Latent Representation](#114-shared-latent-representation)
+  - [11.5 Multi-Layer Perceptron](#115-multi-layer-perceptron)
+  - [11.6 Classification Heads](#116-classification-heads)
+  - [11.7 Regression Heads](#117-regression-heads)
+  - [11.8 Multi-Task Learning](#118-multi-task-learning)
+- [12. Training Pipeline and Optimization](#12-training-pipeline-and-optimization)
+  - [12.1 Multi-Task Prediction Architecture](#121-multi-task-prediction-architecture)
+  - [12.2 Global Regression Slot Vector](#122-global-regression-slot-vector)
+  - [12.3 Regression Masking](#123-regression-masking)
+  - [12.4 Normalized Regression Targets](#124-normalized-regression-targets)
+  - [12.5 Multi-Task Objective Function](#125-multi-task-objective-function)
+  - [12.6 Mini-Batch Optimization](#126-mini-batch-optimization)
+  - [12.7 Gradient Clipping](#127-gradient-clipping)
+  - [12.8 Evaluation Metrics](#128-evaluation-metrics)
+- [13. Execution Pipeline](#13-execution-pipeline)
+  - [13.1 Natural Language Interpretation](#131-natural-language-interpretation)
+  - [13.2 ScientificIntent Representation](#132-scientificintent-representation)
+  - [13.3 Domain Executor Selection](#133-domain-executor-selection)
+  - [13.4 Forward Modelling](#134-forward-modelling)
+  - [13.5 Bayesian Inference](#135-bayesian-inference)
+  - [13.6 Separation Between Learning and Scientific Computation](#136-separation-between-learning-and-scientific-computation)
+  - [13.7 End-to-End Mathematical View](#137-end-to-end-mathematical-view)
+- [14. Assumptions and Limitations](#14-assumptions-and-limitations)
+  - [14.1 Gaussian Noise Assumption](#141-gaussian-noise-assumption)
+  - [14.2 Conditional Independence Assumptions](#142-conditional-independence-assumptions)
+  - [14.3 Normalization Assumptions](#143-normalization-assumptions)
+  - [14.4 Numerical Approximations](#144-numerical-approximations)
+  - [14.5 Finite Sampling in Markov Chain Monte Carlo](#145-finite-sampling-in-markov-chain-monte-carlo)
+  - [14.6 Dependence on Training Distribution](#146-dependence-on-training-distribution)
+  - [14.7 Scope of Scientific Predictions](#147-scope-of-scientific-predictions)
+- [15. Notation Table](#15-notation-table)
+- [16. Summary of Mathematical Models](#16-summary-of-mathematical-models)
+  - [16.1 Bayesian Inference](#161-bayesian-inference)
+  - [16.2 Forward Modelling](#162-forward-modelling)
+  - [16.3 Hydrogen Spectrum Model](#163-hydrogen-spectrum-model)
+  - [16.4 Quantum Mechanical Models](#164-quantum-mechanical-models)
+  - [16.5 Neural Intent Detection and Slot Prediction](#165-neural-intent-detection-and-slot-prediction)
+  - [16.6 Multi-Task Learning](#166-multi-task-learning)
+  - [16.7 Execution Architecture](#167-execution-architecture)
+  - [16.8 Overall Perspective](#168-overall-perspective)
+
 # 1. Introduction
 
 ## 1.1 Purpose of the Mathematical Framework
@@ -130,15 +284,7 @@ This probabilistic formulation enables robust parameter estimation, uncertainty 
 Bayesian inference is founded on **Bayes' theorem**, which relates the conditional probability of model parameters given observed data to the likelihood of the data under those parameters.
 
 $$
-P(\boldsymbol{\theta}\mid D)
-=
-
-\frac{
-P(D\mid\boldsymbol{\theta}),
-P(\boldsymbol{\theta})
-}{
-P(D)
-},
+P(\boldsymbol{\theta}\mid D) = \frac{P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta})}{P(D)}
 $$
 
 where
@@ -153,10 +299,7 @@ where
 Since the evidence does not depend on the unknown parameters, Bayesian parameter estimation is commonly expressed as
 
 $$
-P(\boldsymbol{\theta}\mid D)
-\propto
-P(D\mid\boldsymbol{\theta})
-P(\boldsymbol{\theta}).
+P(\boldsymbol{\theta}\mid D) \propto P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta}).
 $$
 
 Thus, the posterior distribution is proportional to the product of the likelihood and the prior.
@@ -168,7 +311,7 @@ Thus, the posterior distribution is proportional to the product of the likelihoo
 The prior distribution,
 
 $$
-P(\boldsymbol{\theta}),
+P(\boldsymbol{\theta})
 $$
 
 encodes knowledge or assumptions about the parameters before observing the experimental data.
@@ -195,17 +338,15 @@ The likelihood function measures how well a proposed parameter vector explains t
 For observed data
 
 $$
-D={y_1,y_2,\ldots,y_n},
+D=\{y_1,y_2,\ldots,y_n\}
 $$
 
 and corresponding model predictions
 
 $$
-f(\boldsymbol{\theta})
-=
-
-{\hat{y}_1,\hat{y}_2,\ldots,\hat{y}_n},
+f(\boldsymbol{\theta}) = {\hat{y}_1, \hat{y}_2, \ldots, \hat{y}_n}
 $$
+
 
 the likelihood is
 
@@ -218,49 +359,21 @@ $$
 A common assumption in scientific measurements is that observational errors are independent and normally distributed,
 
 $$
-y_i
-=
-
-\hat{y}_i
-+
-\varepsilon_i,
-\qquad
-\varepsilon_i
-\sim
-\mathcal{N}(0,\sigma^2).
+y_i = \hat{y}_i + \varepsilon_i, \qquad \varepsilon_i \sim \mathcal{N}(0,\sigma^2).
 $$
 
 Under this assumption, the likelihood becomes
 
 $$
-P(D\mid\boldsymbol{\theta})
-=
-
-\prod_{i=1}^{n}
-\frac{1}{\sqrt{2\pi\sigma^2}}
-\exp
-\left(
--
-
-\frac{
-(y_i-\hat{y}_i)^2
-}{
-2\sigma^2
-}
-\right).
+P(D\mid\boldsymbol{\theta}) = \prod_{i=1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp \left( - \frac{(y_i-\hat{y}_i)^2}{2\sigma^2} \right).
 $$
 
 For numerical stability, implementations often maximize or evaluate the **log-likelihood** instead,
 
 $$
-\log P(D\mid\boldsymbol{\theta})
-=
--\frac{n}{2}\log(2\pi\sigma^2)
--
-\frac{1}{2\sigma^2}
-\sum_{i=1}^{n}
-(y_i-\hat{y}_i)^2.
+\log P(D\mid\boldsymbol{\theta}) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2} \sum_{i=1}^{n} (y_i-\hat{y}_i)^2.
 $$
+
 
 The second term shows that maximizing the Gaussian likelihood is equivalent to minimizing the weighted sum of squared residuals.
 
@@ -271,10 +384,7 @@ The second term shows that maximizing the Gaussian likelihood is equivalent to m
 Combining the prior and likelihood yields the posterior distribution,
 
 $$
-P(\boldsymbol{\theta}\mid D)
-\propto
-P(D\mid\boldsymbol{\theta})
-P(\boldsymbol{\theta}).
+P(\boldsymbol{\theta}\mid D) \propto P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta}).
 $$
 
 The posterior represents the updated belief about the parameters after incorporating the observed data.
@@ -298,38 +408,19 @@ One possible summary of the posterior is its mode, known as the **Maximum a Post
 The MAP estimator is defined as
 
 $$
-\hat{\boldsymbol{\theta}}_{\text{MAP}}
-=
-
-\arg\max_{\boldsymbol{\theta}}
-P(\boldsymbol{\theta}\mid D).
+\hat{\boldsymbol{\theta}}_{\text{MAP}} = \arg\max_{\boldsymbol{\theta}} P(\boldsymbol{\theta}\mid D).
 $$
 
 Using Bayes' theorem,
 
 $$
-\hat{\boldsymbol{\theta}}_{\text{MAP}}
-=
-
-\arg\max_{\boldsymbol{\theta}}
-\left[
-P(D\mid\boldsymbol{\theta})
-P(\boldsymbol{\theta})
-\right].
+\hat{\boldsymbol{\theta}}_{\text{MAP}} = \arg\max_{\boldsymbol{\theta}} \left[ P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta}) \right].
 $$
 
 Taking logarithms,
 
 $$
-\hat{\boldsymbol{\theta}}_{\text{MAP}}
-=
-
-\arg\max_{\boldsymbol{\theta}}
-\left[
-\log P(D\mid\boldsymbol{\theta})
-+
-\log P(\boldsymbol{\theta})
-\right].
+\hat{\boldsymbol{\theta}}_{\text{MAP}} = \arg\max_{\boldsymbol{\theta}} \left[ \log P(D\mid\boldsymbol{\theta}) + \log P(\boldsymbol{\theta}) \right].
 $$
 
 MAP estimation produces a single best parameter vector while incorporating prior information.
@@ -345,7 +436,7 @@ Although MAP estimation provides a convenient point estimate, it discards most o
 Full Bayesian inference instead seeks to characterize the entire posterior,
 
 $$
-P(\boldsymbol{\theta}\mid D),
+P(\boldsymbol{\theta}\mid D)
 $$
 
 by generating representative samples from it.
@@ -353,25 +444,13 @@ by generating representative samples from it.
 These samples can be used to compute posterior means,
 
 $$
-\mathbb{E}[\boldsymbol{\theta}]
-=
-
-\int
-\boldsymbol{\theta}
-P(\boldsymbol{\theta}\mid D)
-d\boldsymbol{\theta},
+\mathbb{E}[\boldsymbol{\theta}] = \int \boldsymbol{\theta} P(\boldsymbol{\theta}\mid D) d\boldsymbol{\theta}
 $$
 
 posterior variances,
 
 $$
-\mathrm{Var}(\boldsymbol{\theta})
-=
-
-\int
-(\boldsymbol{\theta}-\mathbb{E}[\boldsymbol{\theta}])^2
-P(\boldsymbol{\theta}\mid D)
-d\boldsymbol{\theta},
+\mathrm{Var}(\boldsymbol{\theta}) = \int (\boldsymbol{\theta}-\mathbb{E}[\boldsymbol{\theta}])^2 P(\boldsymbol{\theta}\mid D) d\boldsymbol{\theta}
 $$
 
 credible intervals, parameter correlations, and predictive distributions.
@@ -416,18 +495,13 @@ Within the Scientific AI Framework, MCMC serves as the principal method for Baye
 The objective of MCMC is to generate samples
 
 $$
-\boldsymbol{\theta}^{(1)},
-\boldsymbol{\theta}^{(2)},
-\ldots,
-\boldsymbol{\theta}^{(N)}
+\boldsymbol{\theta}^{(1)}, \boldsymbol{\theta}^{(2)}, \ldots, \boldsymbol{\theta}^{(N)}
 $$
 
 such that, after convergence,
 
 $$
-\boldsymbol{\theta}^{(k)}
-\sim
-P(\boldsymbol{\theta}\mid D).
+\boldsymbol{\theta}^{(k)} \sim P(\boldsymbol{\theta}\mid D).
 $$
 
 Once such samples have been obtained, expectations with respect to the posterior distribution can be approximated by sample averages.
@@ -435,19 +509,7 @@ Once such samples have been obtained, expectations with respect to the posterior
 For any function $g(\boldsymbol{\theta})$,
 
 $$
-\mathbb{E}[g(\boldsymbol{\theta})]
-=
-
-\int
-g(\boldsymbol{\theta})
-P(\boldsymbol{\theta}\mid D)
-d\boldsymbol{\theta}
-\approx
-\frac{1}{N}
-\sum_{k=1}^{N}
-g!\left(
-\boldsymbol{\theta}^{(k)}
-\right).
+\mathbb{E}[g(\boldsymbol{\theta})] = \int g(\boldsymbol{\theta}) P(\boldsymbol{\theta}\mid D) d\boldsymbol{\theta} \approx \frac{1}{N} \sum_{k=1}^{N} g\left( \boldsymbol{\theta}^{(k)} \right).
 $$
 
 Thus, difficult multidimensional integrals are replaced by averages over sampled parameter vectors.
@@ -461,29 +523,13 @@ A Markov chain is a stochastic process in which the next state depends only on t
 If
 
 $$
-\boldsymbol{\theta}^{(0)},
-\boldsymbol{\theta}^{(1)},
-\ldots,
-\boldsymbol{\theta}^{(N)}
+\boldsymbol{\theta}^{(0)}, \boldsymbol{\theta}^{(1)}, \ldots, \boldsymbol{\theta}^{(N)}
 $$
 
 denote successive parameter vectors, the Markov property is
 
 $$
-P!\left(
-\boldsymbol{\theta}^{(k+1)}
-\mid
-\boldsymbol{\theta}^{(k)},
-\ldots,
-\boldsymbol{\theta}^{(0)}
-\right)
-=
-
-P!\left(
-\boldsymbol{\theta}^{(k+1)}
-\mid
-\boldsymbol{\theta}^{(k)}
-\right).
+P\left( \boldsymbol{\theta}^{(k+1)} \mid \boldsymbol{\theta}^{(k)}, \ldots, \boldsymbol{\theta}^{(0)} \right) = P\left( \boldsymbol{\theta}^{(k+1)} \mid \boldsymbol{\theta}^{(k)} \right).
 $$
 
 Appropriate transition rules ensure that the stationary distribution of this chain is the target posterior distribution.
@@ -497,12 +543,7 @@ The Scientific AI Framework employs an **ensemble sampling strategy**, in which 
 Suppose there are $M$ walkers,
 
 $$
-{
-\boldsymbol{\theta}_1,
-\boldsymbol{\theta}_2,
-\ldots,
-\boldsymbol{\theta}_M
-}.
+{ \boldsymbol{\theta}_1, \boldsymbol{\theta}_2, \ldots, \boldsymbol{\theta}_M }.
 $$
 
 Instead of proposing new states independently using fixed proposal distributions, each walker generates proposals based on the positions of other walkers within the ensemble. This adaptive strategy naturally accounts for parameter scaling and correlations without extensive manual tuning.
@@ -530,20 +571,7 @@ Let
 The acceptance probability is generally expressed as
 
 $$
-\alpha
-=
-
-\min
-\left(
-1,
-\frac{
-P(\boldsymbol{\theta}'\mid D)
-q(\boldsymbol{\theta}\mid\boldsymbol{\theta}')
-}{
-P(\boldsymbol{\theta}\mid D)
-q(\boldsymbol{\theta}'\mid\boldsymbol{\theta})
-}
-\right),
+\alpha = \min \left( 1, \frac{ P(\boldsymbol{\theta}'\mid D) q(\boldsymbol{\theta}\mid\boldsymbol{\theta}') }{ P(\boldsymbol{\theta}\mid D) q(\boldsymbol{\theta}'\mid\boldsymbol{\theta}) } \right)
 $$
 
 where $q(\cdot)$ denotes the proposal distribution.
@@ -551,38 +579,19 @@ where $q(\cdot)$ denotes the proposal distribution.
 When symmetric proposals are used,
 
 $$
-q(\boldsymbol{\theta}'\mid\boldsymbol{\theta})
-=
-
-q(\boldsymbol{\theta}\mid\boldsymbol{\theta}'),
+q(\boldsymbol{\theta}'\mid\boldsymbol{\theta}) = q(\boldsymbol{\theta}\mid\boldsymbol{\theta}')
 $$
 
 this simplifies to
 
 $$
-\alpha
-=
-
-\min
-\left(
-1,
-\frac{
-P(\boldsymbol{\theta}'\mid D)
-}{
-P(\boldsymbol{\theta}\mid D)
-}
-\right).
+\alpha = \min \left( 1, \frac{ P(\boldsymbol{\theta}'\mid D) }{ P(\boldsymbol{\theta}\mid D) } \right).
 $$
 
 In practice, implementations commonly evaluate logarithms to improve numerical stability,
 
 $$
-\log P(\boldsymbol{\theta}\mid D)
-=
-
-\log P(D\mid\boldsymbol{\theta})
-+
-\log P(\boldsymbol{\theta}).
+\log P(\boldsymbol{\theta}\mid D) = \log P(D\mid\boldsymbol{\theta}) + \log P(\boldsymbol{\theta}).
 $$
 
 A proposal that increases the posterior probability is always accepted, while proposals that decrease it may still be accepted with a probability determined by the ratio above, allowing the sampler to escape local maxima and explore the full posterior distribution.
@@ -600,10 +609,7 @@ Samples collected during burn-in are generally discarded because they depend str
 If the total number of generated samples is $N$ and the burn-in length is $B$, only
 
 $$
-N_{\text{usable}}
-=
-
-N-B
+N_{\text{usable}} = N-B
 $$
 
 samples are retained for subsequent statistical analysis.
@@ -635,44 +641,19 @@ Once convergence has been achieved and burn-in samples have been removed, the re
 Given posterior samples
 
 $$
-{
-\boldsymbol{\theta}^{(1)},
-\ldots,
-\boldsymbol{\theta}^{(N)}
-},
+{ \boldsymbol{\theta}^{(1)}, \ldots, \boldsymbol{\theta}^{(N)} }
 $$
 
 common summary statistics include the posterior mean,
 
 $$
-\bar{\boldsymbol{\theta}}
-=
-
-\frac{1}{N}
-\sum_{k=1}^{N}
-\boldsymbol{\theta}^{(k)},
+\bar{\boldsymbol{\theta}} = \frac{1}{N} \sum_{k=1}^{N} \boldsymbol{\theta}^{(k)}
 $$
 
 and the posterior covariance matrix,
 
 $$
-\mathrm{Cov}(\boldsymbol{\theta})
-=
-
-\frac{1}{N-1}
-\sum_{k=1}^{N}
-\left(
-\boldsymbol{\theta}^{(k)}
--
-
-\bar{\boldsymbol{\theta}}
-\right)
-\left(
-\boldsymbol{\theta}^{(k)}
--
-
-\bar{\boldsymbol{\theta}}
-\right)^{T}.
+\mathrm{Cov}(\boldsymbol{\theta}) = \frac{1}{N-1} \sum_{k=1}^{N} \left( \boldsymbol{\theta}^{(k)} - \bar{\boldsymbol{\theta}} \right) \left( \boldsymbol{\theta}^{(k)} - \bar{\boldsymbol{\theta}} \right)^{T}.
 $$
 
 In addition, one may compute:
@@ -728,7 +709,7 @@ Examples of forward modelling within the framework include:
 A forward model may be represented abstractly as a mapping
 
 $$
-\mathbf{y} = f(\boldsymbol{\theta}),
+\mathbf{y} = f(\boldsymbol{\theta})
 $$
 
 where
@@ -742,10 +723,7 @@ The parameter vector may contain physical constants, amplitudes, frequencies, co
 For example,
 
 $$
-\boldsymbol{\theta}
-=
-
-(\theta_1,\theta_2,\ldots,\theta_p),
+\boldsymbol{\theta} = (\theta_1,\theta_2,\ldots,\theta_p)
 $$
 
 where $p$ is the number of free parameters.
@@ -753,10 +731,7 @@ where $p$ is the number of free parameters.
 The output may likewise be represented as
 
 $$
-\mathbf{y}
-=
-
-(y_1,y_2,\ldots,y_n),
+\mathbf{y} = (y_1,y_2,\ldots,y_n)
 $$
 
 where each component corresponds to a predicted measurement or simulated observable.
@@ -770,16 +745,13 @@ In the absence of measurement noise or stochastic effects, the forward model is 
 That is, for a fixed parameter vector,
 
 $$
-\boldsymbol{\theta},
+\boldsymbol{\theta}
 $$
 
 the model always produces the same prediction,
 
 $$
-f(\boldsymbol{\theta})
-=
-
-\mathbf{y}.
+f(\boldsymbol{\theta}) = \mathbf{y}.
 $$
 
 Repeated evaluations with identical inputs therefore yield identical outputs.
@@ -799,10 +771,7 @@ $$
 are compared against forward model predictions
 
 $$
-\mathbf{y}_{\mathrm{pred}}
-=
-
-f(\boldsymbol{\theta}).
+\mathbf{y}_{\mathrm{pred}} = f(\boldsymbol{\theta}).
 $$
 
 The discrepancy between prediction and observation determines the likelihood function used in Bayes' theorem.
@@ -810,12 +779,7 @@ The discrepancy between prediction and observation determines the likelihood fun
 Defining the residual vector as
 
 $$
-\mathbf{r}
-=
-
- \mathbf{y}_{\mathrm{obs}} -
-
-\mathbf{y}_{\mathrm{pred}},
+\mathbf{r} = \mathbf{y}_{\mathrm{obs}} - \mathbf{y}_{\mathrm{pred}}
 $$
 
 the likelihood is evaluated according to an assumed statistical error model, commonly Gaussian.
@@ -831,21 +795,13 @@ Although the forward model itself is deterministic, real experimental observatio
 The observed data are therefore represented as
 
 $$
-\mathbf{y}_{\mathrm{obs}}
-=
-
-f(\boldsymbol{\theta})
-+
-\boldsymbol{\varepsilon},
+\mathbf{y}_{\mathrm{obs}} = f(\boldsymbol{\theta}) + \boldsymbol{\varepsilon}
 $$
 
 where
 
 $$
-\boldsymbol{\varepsilon}
-=
-
-(\varepsilon_1,\varepsilon_2,\ldots,\varepsilon_n)
+\boldsymbol{\varepsilon} = (\varepsilon_1,\varepsilon_2,\ldots,\varepsilon_n)
 $$
 
 denotes the measurement noise.
@@ -855,9 +811,7 @@ denotes the measurement noise.
 Throughout much of the framework, the observational noise is assumed to follow an independent Gaussian distribution,
 
 $$
-\varepsilon_i
-\sim
-\mathcal{N}(0,\sigma^2),
+\varepsilon_i \sim \mathcal{N}(0,\sigma^2)
 $$
 
 where
@@ -865,7 +819,7 @@ where
 * the expected value is
 
 $$
-\mathbb{E}[\varepsilon_i]=0,
+\mathbb{E}[\varepsilon_i]=0
 $$
 
 * and the variance is
@@ -877,12 +831,7 @@ $$
 Under this assumption,
 
 $$
-y_{\mathrm{obs},i}
-=
-
-f_i(\boldsymbol{\theta})
-+
-\varepsilon_i.
+y_{\mathrm{obs},i} = f_i(\boldsymbol{\theta}) + \varepsilon_i.
 $$
 
 The Gaussian model is widely adopted because it provides a mathematically convenient approximation for many experimental measurement processes and leads naturally to least-squares optimization and Gaussian likelihood functions.
@@ -892,13 +841,7 @@ The Gaussian model is widely adopted because it provides a mathematically conven
 Unless otherwise specified, the framework assumes that individual measurement errors are statistically independent,
 
 $$
-\mathrm{Cov}
-(\varepsilon_i,\varepsilon_j)
-=
-
-0,
-\qquad
-i \neq j.
+\mathrm{Cov} (\varepsilon_i,\varepsilon_j) = 0, \qquad i \neq j.
 $$
 
 This assumption simplifies likelihood evaluation and is appropriate for many physical measurement systems in which observations are acquired independently.
@@ -914,10 +857,7 @@ An important application of forward modelling within the Scientific AI Framework
 Synthetic observations are produced by evaluating the forward model for known parameters,
 
 $$
-\mathbf{y}_{\mathrm{true}}
-=
-
-f(\boldsymbol{\theta}_{\mathrm{true}}),
+\mathbf{y}_{\mathrm{true}} = f(\boldsymbol{\theta}_{\mathrm{true}})
 $$
 
 where
@@ -931,31 +871,19 @@ is a prescribed parameter vector.
 To emulate realistic experimental conditions, random noise may then be added,
 
 $$
-\mathbf{y}_{\mathrm{synthetic}}
-=
-
-f(\boldsymbol{\theta}_{\mathrm{true}})
-+
-\boldsymbol{\varepsilon}.
+\mathbf{y}_{\mathrm{synthetic}} = f(\boldsymbol{\theta}_{\mathrm{true}}) + \boldsymbol{\varepsilon}.
 $$
 
 In the special case of Gaussian noise,
 
 $$
-\varepsilon_i
-\sim
-\mathcal{N}(0,\sigma^2),
+\varepsilon_i \sim \mathcal{N}(0,\sigma^2)
 $$
 
 yielding
 
 $$
-y_{\mathrm{synthetic},i}
-=
-
-f_i(\boldsymbol{\theta}_{\mathrm{true}})
-+
-\varepsilon_i.
+y_{\mathrm{synthetic},i} = f_i(\boldsymbol{\theta}_{\mathrm{true}}) + \varepsilon_i.
 $$
 
 Synthetic datasets are valuable because the true generating parameters are known exactly, enabling objective evaluation of inference algorithms and machine learning models.
@@ -989,21 +917,13 @@ $$
 2. Evaluate the forward model
 
 $$
-\mathbf{y}
-=
-
-f(\boldsymbol{\theta}).
+\mathbf{y} = f(\boldsymbol{\theta}).
 $$
 
 3. Optionally generate synthetic observations by adding measurement noise,
 
 $$
-\mathbf{y}_{\mathrm{synthetic}}
-=
-
-\mathbf{y}
-+
-\boldsymbol{\varepsilon}.
+\mathbf{y}_{\mathrm{synthetic}} = \mathbf{y} + \boldsymbol{\varepsilon}.
 $$
 
 4. Return the simulated observables or use them as input for downstream tasks such as Bayesian parameter inference or machine learning.
@@ -1027,45 +947,24 @@ The hydrogen spectrum is constructed from electronic transitions between discret
 The energy of the hydrogen atom in the quantum state with principal quantum number $n$ is given by
 
 $$
-E_n
-=
-
--\frac{R_{\mathrm{H}}}{n^2},
+E_n = -\frac{R_{\mathrm{H}}}{n^2}
 $$
 
 where
 
-* $R_{\mathrm{H}} \approx 13.598285,\mathrm{eV}$ is the Rydberg energy constant,
-* $n = 1,2,3,\ldots$ is the principal quantum number.
+* $R_{\mathrm{H}} \approx 13.598285 \mathrm{eV}$ is the Rydberg energy constant,
+* $n = 1 2,3 \ldots$ is the principal quantum number.
 
 For a transition from an upper level $n_u$ to a lower level $n_l$, the emitted photon energy is
 
 $$
-E_{\mathrm{line}}
-=
-
- E_u-E_l = 
-
--\frac{R_{\mathrm{H}}}{n_u^2}
-+
-\frac{R_{\mathrm{H}}}{n_l^2}.
+E_{\mathrm{line}} = E_u-E_l = -\frac{R_{\mathrm{H}}}{n_u^2} + \frac{R_{\mathrm{H}}}{n_l^2}.
 $$
 
 Each transition is represented by a normalized Gaussian line profile,
 
 $$
-I_i(E)
-=
-
-\frac{A_i}
-{\sigma_i\sqrt{2\pi}}
-\exp
-\left(
--
-
-\frac{(E-E_{\mathrm{line},i})^2}
-{2\sigma_i^2}
-\right),
+I_i(E) = \frac{A_i} {\sigma_i\sqrt{2\pi}} \exp \left( - \frac{(E-E_{\mathrm{line},i})^2} {2\sigma_i^2} \right)
 $$
 
 where
@@ -1077,14 +976,7 @@ where
 In the current implementation, the intrinsic line width is computed as
 
 $$
-\sigma_i
-=
-
-\max
-\left(
-0.1,,
-0.1,\sigma_{\mathrm{instr}}
-\right),
+\sigma_i = \max \left( 0.1,, 0.1,\sigma_{\mathrm{instr}} \right)
 $$
 
 ensuring a minimum numerical broadening while maintaining a proportional relationship to the instrumental resolution parameter.
@@ -1099,7 +991,7 @@ Real spectrometers do not measure infinitely sharp spectral lines. Instrumental 
 This broadening is represented by the parameter
 
 $$
-\sigma_{\mathrm{instr}},
+\sigma_{\mathrm{instr}}
 $$
 
 which is assumed to be identical for all transitions in the current implementation.
@@ -1133,28 +1025,13 @@ This parameter shifts the entire spectrum uniformly and is inferred jointly with
 The intrinsic hydrogen spectrum is obtained by summing the contributions from all configured transitions,
 
 $$
-I_{\mathrm{phys}}(E)
-=
-
-\sum_{i=1}^{N_{\mathrm{lines}}}
-\frac{A_i}
-{\sigma_i\sqrt{2\pi}}
-\exp
-\left(
--
-
-\frac{(E-E_{\mathrm{line},i})^2}
-{2\sigma_i^2}
-\right).
+I_{\mathrm{phys}}(E) = \sum_{i=1}^{N_{\mathrm{lines}}} \frac{A_i} {\sigma_i\sqrt{2\pi}} \exp \left( - \frac{(E-E_{\mathrm{line},i})^2} {2\sigma_i^2} \right).
 $$
 
 To model the finite response of the measuring instrument, the intrinsic spectrum is convolved with an instrumental response function,
 
 $$
-I_{\mathrm{conv}}(E)
-=
-
-(K * I_{\mathrm{phys}})(E),
+I_{\mathrm{conv}}(E) = (K * I_{\mathrm{phys}})(E)
 $$
 
 where
@@ -1165,12 +1042,7 @@ where
 Finally, a constant background contribution is added,
 
 $$
-I(E)
-=
-
-I_{\mathrm{conv}}(E)
-+
-B,
+I(E) = I_{\mathrm{conv}}(E) + B
 $$
 
 where $B$ is the background count level.
@@ -1186,18 +1058,7 @@ This sequence—construction of intrinsic spectral lines, convolution with the i
 For Bayesian inference, the parameter vector is represented as
 
 $$
-\boldsymbol{\theta}
-=
-
-(
-\sigma_{\mathrm{instr}},
-B,
-S,
-r_1,
-r_2,
-\ldots,
-r_N
-),
+\boldsymbol{\theta} = ( \sigma_{\mathrm{instr}}, B, S, r_1, r_2, \ldots, r_N )
 $$
 
 where
@@ -1210,11 +1071,7 @@ where
 Rather than sampling amplitudes directly, the framework computes the physical amplitudes as
 
 $$
-A_i
-=
-
-e^{r_i}
-,S.
+A_i = e^{r_i} ,S.
 $$
 
 This parameterization guarantees strictly positive amplitudes while permitting efficient exploration of several orders of magnitude in intensity.
@@ -1234,19 +1091,13 @@ $$
 The resulting spectrum is normalized by a global scaling factor so that its total expected intensity matches a desired count level,
 
 $$
-I_{\mathrm{scaled}}(E)
-=
-
-C,I(E),
+I_{\mathrm{scaled}}(E) = C,I(E)
 $$
 
 where the normalization constant $C$ is chosen such that
 
 $$
-\sum_i
-I_{\mathrm{scaled}}(E_i)
-\approx
-10^5
+\sum_i I_{\mathrm{scaled}}(E_i) \approx 10^5
 $$
 
 in the current implementation.
@@ -1256,12 +1107,7 @@ A constant background contribution is then added to every energy bin.
 The observed photon counts are generated by independent Poisson sampling,
 
 $$
-k_i
-\sim
-\operatorname{Poisson}
-!\left(
-I_{\mathrm{scaled}}(E_i)
-\right),
+k_i \sim \operatorname{Poisson} \left( I_{\mathrm{scaled}}(E_i) \right)
 $$
 
 where $k_i$ denotes the measured count in the $i$-th energy bin.
@@ -1269,10 +1115,7 @@ where $k_i$ denotes the measured count in the $i$-th energy bin.
 The associated statistical uncertainty is estimated using the standard Poisson approximation,
 
 $$
-\sigma_i
-=
-
-\sqrt{\max(k_i,1)},
+\sigma_i = \sqrt\{\max(k_i,1)\}
 $$
 
 which avoids zero-valued uncertainties for bins containing no observed counts.
@@ -1290,7 +1133,7 @@ The hydrogen inference module combines hard parameter constraints with probabili
 The implementation restricts physically meaningful parameter values to predefined intervals. Parameter vectors outside these bounds are assigned zero prior probability,
 
 $$
-P(\boldsymbol{\theta})=0,
+P(\boldsymbol{\theta})=0
 $$
 
 or equivalently,
@@ -1312,13 +1155,7 @@ $$
 is assigned a log-normal prior,
 
 $$
-\log S
-\sim
-\mathcal{N}
-!\left(
-\mu,
-\sigma_{\log}^2
-\right),
+\log S \sim \mathcal{N} \left( \mu, \sigma_{\log}^2 \right)
 $$
 
 where the implementation uses
@@ -1340,10 +1177,7 @@ This prior permits several orders of magnitude variation while favouring physica
 The instrumental broadening parameter is assigned an exponential prior,
 
 $$
-\sigma_{\mathrm{instr}}
-\sim
-\operatorname{Exponential}
-(\beta),
+\sigma_{\mathrm{instr}} \sim \operatorname{Exponential} (\beta)
 $$
 
 with scale parameter
@@ -1368,10 +1202,7 @@ If
 then the counts are modelled using a Poisson distribution,
 
 $$
-k_i
-\sim
-\operatorname{Poisson}
-(\lambda_i).
+k_i \sim \operatorname{Poisson} (\lambda_i).
 $$
 
 The probability of observing
@@ -1383,49 +1214,19 @@ $$
 counts is
 
 $$
-P(k_i\mid\lambda_i)
-=
-
-\frac{
-\lambda_i^{k_i}
-e^{-\lambda_i}
-}{
-k_i!
-}.
+P(k_i\mid\lambda_i) = \frac{ \lambda_i^{k_i} e^{-\lambda_i} }{ k_i! }.
 $$
 
 Assuming independence between energy bins, the total likelihood is
 
 $$
-P(D\mid\boldsymbol{\theta})
-=
-
-\prod_i
-\frac{
-\lambda_i^{k_i}
-e^{-\lambda_i}
-}{
-k_i!
-}.
+P(D\mid\boldsymbol{\theta}) = \prod_i \frac{ \lambda_i^{k_i} e^{-\lambda_i} }{ k_i! }.
 $$
 
 For numerical stability, the implementation evaluates the corresponding log-likelihood,
 
 $$
-\log
-P(D\mid\boldsymbol{\theta})
-=
-
-\sum_i
-\left[
-k_i
-\log\lambda_i
--
-
- \lambda_i
-
-\log(k_i!)
-\right].
+\log P(D\mid\boldsymbol{\theta}) = \sum_i \left[ k_i \log\lambda_i - \lambda_i \log(k_i!) \right].
 $$
 
 Predicted counts are constrained to remain positive before evaluating the logarithm in order to avoid numerical singularities.
@@ -1437,24 +1238,13 @@ Predicted counts are constrained to remain positive before evaluating the logari
 The posterior probability distribution combines the prior and likelihood according to Bayes' theorem,
 
 $$
-P(\boldsymbol{\theta}\mid D)
-\propto
-P(D\mid\boldsymbol{\theta})
-P(\boldsymbol{\theta}).
+P(\boldsymbol{\theta}\mid D) \propto P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta}).
 $$
 
 Equivalently, in logarithmic form,
 
 $$
-\log
-P(\boldsymbol{\theta}\mid D)
-=
-
-\log
-P(D\mid\boldsymbol{\theta})
-+
-\log
-P(\boldsymbol{\theta}).
+\log P(\boldsymbol{\theta}\mid D) = \log P(D\mid\boldsymbol{\theta}) + \log P(\boldsymbol{\theta}).
 $$
 
 This log-posterior function constitutes the objective evaluated repeatedly during Markov Chain Monte Carlo sampling.
@@ -1466,18 +1256,7 @@ This log-posterior function constitutes the objective evaluated repeatedly durin
 Given an observed hydrogen spectrum, the objective is to estimate the unknown parameter vector
 
 $$
-\boldsymbol{\theta}
-=
-
-(
-\sigma_{\mathrm{instr}},
-B,
-S,
-r_1,
-r_2,
-\ldots,
-r_N
-).
+\boldsymbol{\theta} = ( \sigma_{\mathrm{instr}}, B, S, r_1, r_2, \ldots, r_N ).
 $$
 
 The framework evaluates the forward model for proposed parameters, computes the corresponding Poisson log-likelihood, incorporates the prior distributions, and samples the resulting posterior using Markov Chain Monte Carlo methods.
@@ -1531,9 +1310,7 @@ $$
 The corresponding effective oscillation frequency is
 
 $$
-\Omega_{\mathrm{eff}}
-=
-\sqrt{\Omega_R^2+\Delta^2}.
+\Omega_{\mathrm{eff}} = \sqrt{\Omega_R^2+\Delta^2}.
 $$
 
 This quantity determines the oscillation frequency observed in the measured signal.
@@ -1553,31 +1330,13 @@ Let
 The predicted measurement is
 
 $$
-y(t)
-=
-C
-+
-A
-e^{-\gamma t}
-\cos
-\left(
-\Omega_{\mathrm{eff}} t
-\right).
+y(t) = C + A e^{-\gamma t} \cos \left( \Omega_{\mathrm{eff}} t \right).
 $$
 
 Substituting the expression for the effective frequency,
 
 $$
-y(t)
-=
-C
-+
-A
-e^{-\gamma t}
-\cos
-\left(
-\sqrt{\Omega_R^2+\Delta^2}\,t
-\right).
+y(t) = C + A e^{-\gamma t} \cos \left( \sqrt{\Omega_R^2+\Delta^2}\,t \right).
 $$
 
 The model consists of four components:
@@ -1594,15 +1353,7 @@ The model consists of four components:
 The forward model depends on the parameter vector
 
 $$
-\boldsymbol{\theta}
-=
-(
-\Omega_R,
-\Delta,
-A,
-\gamma,
-C
-),
+\boldsymbol{\theta} = ( \Omega_R, \Delta, A, \gamma, C )
 $$
 
 where
@@ -1628,14 +1379,7 @@ $$
 The predicted measurement vector is therefore
 
 $$
-\mathbf{y}
-=
-\left(
-y(t_1),
-y(t_2),
-\ldots,
-y(t_N)
-\right).
+\mathbf{y} = \left( y(t_1), y(t_2), \ldots, y(t_N) \right).
 $$
 
 These predicted values are subsequently compared with observed measurements during Bayesian inference.
@@ -1647,16 +1391,7 @@ These predicted values are subsequently compared with observed measurements duri
 Synthetic datasets are generated by first evaluating the noiseless forward model,
 
 $$
-y_{\mathrm{clean}}(t)
-=
-C
-+
-A
-e^{-\gamma t}
-\cos
-\left(
-\Omega_{\mathrm{eff}} t
-\right),
+y_{\mathrm{clean}}(t) = C + A e^{-\gamma t} \cos \left( \Omega_{\mathrm{eff}} t \right)
 $$
 
 using prescribed ground-truth parameters.
@@ -1664,31 +1399,19 @@ using prescribed ground-truth parameters.
 Independent Gaussian measurement noise is then added,
 
 $$
-\varepsilon_i
-\sim
-\mathcal{N}
-\left(
-0,
-\sigma_{\mathrm{noise}}^2
-\right),
+\varepsilon_i \sim \mathcal{N} \left( 0, \sigma_{\mathrm{noise}}^2 \right)
 $$
 
 yielding the synthetic observations
 
 $$
-y_i
-=
-y_{\mathrm{clean}}(t_i)
-+
-\varepsilon_i.
+y_i = y_{\mathrm{clean}}(t_i) + \varepsilon_i.
 $$
 
 The standard deviation of the measurement uncertainty is assumed constant,
 
 $$
-\sigma_i
-=
-\sigma_{\mathrm{noise}},
+\sigma_i = \sigma_{\mathrm{noise}}
 $$
 
 for every sampling time.
@@ -1700,25 +1423,13 @@ for every sampling time.
 The current implementation assumes additive independent Gaussian noise with zero mean,
 
 $$
-\varepsilon_i
-\sim
-\mathcal{N}
-\left(
-0,
-\sigma_{\mathrm{noise}}^2
-\right).
+\varepsilon_i \sim \mathcal{N} \left( 0, \sigma_{\mathrm{noise}}^2 \right).
 $$
 
 Consequently,
 
 $$
-y_i
-\sim
-\mathcal{N}
-\left(
-y_{\mathrm{clean}}(t_i),
-\sigma_{\mathrm{noise}}^2
-\right).
+y_i \sim \mathcal{N} \left( y_{\mathrm{clean}}(t_i), \sigma_{\mathrm{noise}}^2 \right).
 $$
 
 This model is appropriate for many continuous-valued laboratory measurements in which detector fluctuations are approximately normally distributed.
@@ -1748,16 +1459,7 @@ The equations presented above directly correspond to the implementation of the s
 The single-qubit inference module estimates the model parameters from measured time-series data using Bayesian inference. The unknown parameter vector is
 
 $$
-\boldsymbol{\theta}
-=
-
-(
-\Omega_R,
-\Delta,
-\gamma,
-A,
-C
-),
+\boldsymbol{\theta} = ( \Omega_R, \Delta, \gamma, A, C )
 $$
 
 where
@@ -1771,7 +1473,7 @@ where
 Given observed measurements, the objective is to estimate the posterior distribution
 
 $$
-P(\boldsymbol{\theta}\mid D),
+P(\boldsymbol{\theta}\mid D)
 $$
 
 where $D$ denotes the measured time-series data.
@@ -1787,49 +1489,29 @@ The inference procedure combines hard parameter bounds with probabilistic prior 
 To restrict sampling to physically meaningful regions, the implementation enforces the following bounds:
 
 $$
-0
-\le
-\Omega_R
-\le
-10^3,
+0 \le \Omega_R \le 10^3
 $$
 
 $$
--10^3
-\le
-\Delta
-\le
-10^3,
+-10^3 \le \Delta \le 10^3
 $$
 
 $$
-0
-\le
-\gamma
-\le
-10^2,
+0 \le \gamma \le 10^2
 $$
 
 $$
--10^6
-\le
-A
-\le
-10^6,
+-10^6 \le A \le 10^6
 $$
 
 $$
--10^6
-\le
-C
-\le
-10^6.
+-10^6 \le C \le 10^6.
 $$
 
 Parameter vectors violating any of these constraints are assigned zero prior probability,
 
 $$
-P(\boldsymbol{\theta}) = 0,
+P(\boldsymbol{\theta}) = 0
 $$
 
 or equivalently,
@@ -1845,9 +1527,7 @@ This prevents the Markov Chain Monte Carlo sampler from exploring invalid region
 The decay parameter is assigned an exponential prior,
 
 $$
-\gamma
-\sim
-\operatorname{Exponential}(\beta),
+\gamma \sim \operatorname{Exponential}(\beta)
 $$
 
 where the implementation uses
@@ -1859,27 +1539,13 @@ $$
 The corresponding probability density is
 
 $$
-P(\gamma)
-=
-
-\frac{1}{\beta}
-\exp
-\left(
--\frac{\gamma}{\beta}
-\right),
-\qquad
-\gamma \ge 0.
+P(\gamma) = \frac{1}{\beta} \exp \left( -\frac{\gamma}{\beta} \right), \qquad \gamma \ge 0.
 $$
 
 For $\beta = 1$, this simplifies to
 
 $$
-P(\gamma)
-=
-
-e^{-\gamma},
-\qquad
-\gamma \ge 0.
+P(\gamma) = e^{-\gamma}, \qquad \gamma \ge 0.
 $$
 
 This prior favors slower decoherence while permitting larger decay rates when supported by the observed data.
@@ -1897,7 +1563,7 @@ $$
 denote the measured value at sampling time
 
 $$
-t_i,
+t_i
 $$
 
 and let
@@ -1911,12 +1577,7 @@ denote the corresponding prediction of the forward model.
 The residual is defined as
 
 $$
-r_i
-=
-
- y_i
-
-f(t_i;\boldsymbol{\theta}).
+r_i = y_i f(t_i;\boldsymbol{\theta}).
 $$
 
 The implementation assumes additive independent Gaussian measurement errors with known standard deviations
@@ -1928,37 +1589,19 @@ $$
 Accordingly,
 
 $$
-y_i
-\sim
-\mathcal{N}
-\left(
-f(t_i;\boldsymbol{\theta}),
-\sigma_i^2
-\right).
+y_i \sim \mathcal{N} \left( f(t_i;\boldsymbol{\theta}), \sigma_i^2 \right).
 $$
 
 The implementation evaluates the Gaussian log-likelihood in the numerically stable form
 
 $$
-\log P(D\mid\boldsymbol{\theta})
-=
-
--\frac{1}{2}
-\sum_{i=1}^{N}
-\left[
-\frac{r_i^2}{\sigma_i^2}
-+
-\log\left(2\pi\sigma_i^2\right)
-\right],
+\log P(D\mid\boldsymbol{\theta}) = -\frac{1}{2} \sum_{i=1}^{N} \left[ \frac{r_i^2}{\sigma_i^2} + \log\left(2\pi\sigma_i^2\right) \right]
 $$
 
 where
 
 $$
-r_i
-=
-
- y_i - f(t_i;\boldsymbol{\theta})
+r_i = y_i - f(t_i;\boldsymbol{\theta})
 $$
 
 denotes the residual between the observed measurement and the model prediction at the $i$-th sampling time.
@@ -1973,24 +1616,13 @@ To avoid numerical instabilities, the variances are constrained to remain strict
 The posterior distribution is obtained by combining the prior and likelihood according to Bayes' theorem,
 
 $$
-P(\boldsymbol{\theta}\mid D)
-\propto
-P(D\mid\boldsymbol{\theta})
-P(\boldsymbol{\theta}).
+P(\boldsymbol{\theta}\mid D) \propto P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta}).
 $$
 
 Equivalently, in logarithmic form,
 
 $$
-\log
-P(\boldsymbol{\theta}\mid D)
-=
-
-\log
-P(D\mid\boldsymbol{\theta})
-+
-\log
-P(\boldsymbol{\theta}).
+\log P(\boldsymbol{\theta}\mid D) = \log P(D\mid\boldsymbol{\theta}) + \log P(\boldsymbol{\theta}).
 $$
 
 This log-posterior function is the quantity evaluated repeatedly during Markov Chain Monte Carlo sampling.
@@ -2008,11 +1640,7 @@ The retained samples are then used to compute summary statistics of the posterio
 The Maximum a Posteriori (MAP) estimate is defined as the sampled parameter vector with the highest posterior probability,
 
 $$
-\hat{\boldsymbol{\theta}}_{\mathrm{MAP}}
-=
-
-\arg\max_{\boldsymbol{\theta}}
-P(\boldsymbol{\theta}\mid D).
+\hat{\boldsymbol{\theta}}_{\mathrm{MAP}} = \arg\max_{\boldsymbol{\theta}} P(\boldsymbol{\theta}\mid D).
 $$
 
 The MAP estimate represents the single most probable parameter vector identified by the sampler.
@@ -2022,12 +1650,7 @@ The MAP estimate represents the single most probable parameter vector identified
 The posterior mean is computed as the arithmetic average of the retained samples,
 
 $$
-\bar{\boldsymbol{\theta}}
-=
-
-\frac{1}{N}
-\sum_{k=1}^{N}
-\boldsymbol{\theta}^{(k)},
+\bar{\boldsymbol{\theta}} = \frac{1}{N} \sum_{k=1}^{N} \boldsymbol{\theta}^{(k)}
 $$
 
 where
@@ -2048,17 +1671,8 @@ The Bayesian inference procedure implemented for the single-qubit model follows 
 
 1. Define the parameter vector
    $$
-   \boldsymbol{\theta}
-   =
-
-   (
-   \Omega_R,
-   \Delta,
-   \gamma,
-   A,
-   C
-   ).
-   $$
+\boldsymbol{\theta} = ( \Omega_R, \Delta, \gamma, A, C ).
+$$
 
 2. Evaluate the forward model to predict the measured signal.
 
@@ -2095,10 +1709,7 @@ $$
 qubits, the total Hilbert space is
 
 $$
-\mathcal{H}
-=
-
-(\mathbb{C}^2)^{\otimes N},
+\mathcal{H} = (\mathbb{C}^2)^{\otimes N}
 $$
 
 where
@@ -2118,11 +1729,7 @@ Each qubit is represented by a two-dimensional state space, and operators acting
 For each qubit, the standard Pauli matrices
 
 $$
-\sigma_x,
-\qquad
-\sigma_y,
-\qquad
-\sigma_z
+\sigma_x, \qquad \sigma_y, \qquad \sigma_z
 $$
 
 are employed as the fundamental observables and generators of evolution.
@@ -2130,9 +1737,7 @@ are employed as the fundamental observables and generators of evolution.
 The implementation constructs tensor-product operators of the form
 
 $$
-\sigma_\alpha^{(i)},
-\qquad
-\alpha\in{x,y,z},
+\sigma_\alpha^{(i)}, \qquad \alpha\in\{x,y,z\}
 $$
 
 which act only on qubit
@@ -2150,36 +1755,19 @@ while leaving all remaining qubits unchanged.
 For each qubit
 
 $$
-i,
+i
 $$
 
 the local control fields are specified by the parameters
 
 $$
-h_x^{(i)},
-\qquad
-h_y^{(i)},
-\qquad
-h_z^{(i)}.
+h_x^{(i)}, \qquad h_y^{(i)}, \qquad h_z^{(i)}.
 $$
 
 The local contribution to the Hamiltonian is
 
 $$
-H_{\mathrm{local}}
-=
-
-\sum_{i=1}^{N}
-\left(
-h_x^{(i)}
-\sigma_x^{(i)}
-+
-h_y^{(i)}
-\sigma_y^{(i)}
-+
-h_z^{(i)}
-\sigma_z^{(i)}
-\right).
+H_{\mathrm{local}} = \sum_{i=1}^{N} \left( h_x^{(i)} \sigma_x^{(i)} + h_y^{(i)} \sigma_y^{(i)} + h_z^{(i)} \sigma_z^{(i)} \right).
 $$
 
 In the current implementation, the optional qubit frequency parameter is stored but is not included in the Hamiltonian construction.
@@ -2195,28 +1783,17 @@ g_{ij}.
 $$
 
 For coupled qubits
-
 $$
 i
 $$
-
 and
-
 $$
-j,
+j
 $$
-
 the interaction Hamiltonian is
 
 $$
-H_{\mathrm{coupling}}
-=
-
-\sum_{i<j}
-g_{ij}
-,
-\sigma_z^{(i)}
-\sigma_z^{(j)}.
+H_{\mathrm{coupling}} = \sum_{i<j} g_{ij}  \sigma_z^{(i)} \sigma_z^{(j)}.
 $$
 
 The implementation supports specification of couplings as a global constant, a dictionary of qubit pairs, or an explicit list of coupling tuples.
@@ -2228,12 +1805,7 @@ The implementation supports specification of couplings as a global constant, a d
 The complete Hamiltonian governing the system evolution is
 
 $$
-H
-=
-
-H_{\mathrm{local}}
-+
-H_{\mathrm{coupling}}.
+H = H_{\mathrm{local}} + H_{\mathrm{coupling}}.
 $$
 
 Operationally, the software constructs individual Hamiltonian terms and sums them once to obtain the final Hamiltonian operator used for simulation.
@@ -2245,16 +1817,7 @@ Operationally, the software constructs individual Hamiltonian terms and sums the
 The simulations begin from a product state in which the first qubit is initialized in the excited computational basis state and all remaining qubits are initialized in the ground state,
 
 $$
-|\psi_0\rangle
-=
-
-|1\rangle
-\otimes
-|0\rangle
-\otimes
-\cdots
-\otimes
-|0\rangle.
+|\psi_0\rangle = |1\rangle \otimes |0\rangle \otimes \cdots \otimes |0\rangle.
 $$
 
 This state serves as the initial condition for subsequent time evolution.
@@ -2266,13 +1829,7 @@ This state serves as the initial condition for subsequent time evolution.
 The time evolution of the quantum state satisfies the time-dependent Schrödinger equation,
 
 $$
-i,
-\frac{\partial}{\partial t}
-|\psi(t)\rangle
-=
-
-H
-|\psi(t)\rangle,
+i, \frac{\partial}{\partial t} |\psi(t)\rangle = H |\psi(t)\rangle
 $$
 
 where
@@ -2289,18 +1846,7 @@ The framework numerically integrates this equation to obtain the quantum state a
 For each qubit, the measured observable is the expectation value of the Pauli-$Z$ operator,
 
 $$
-\langle
-\sigma_z^{(i)}
-\rangle
-=
-
-\langle
-\psi(t)
-|
-\sigma_z^{(i)}
-|
-\psi(t)
-\rangle.
+\langle \sigma_z^{(i)} \rangle = \langle \psi(t) | \sigma_z^{(i)} | \psi(t) \rangle.
 $$
 
 Collecting these expectation values over time produces a matrix of predicted measurements with one column per qubit and one row per sampling instant.
@@ -2312,14 +1858,7 @@ Collecting these expectation values over time produces a matrix of predicted mea
 After quantum evolution, the simulated observables are transformed by a simple linear instrument model,
 
 $$
-y_{\mathrm{measured}}
-=
-
-G
-*
-y_{\mathrm{quantum}}
-+
-C,
+y_{\mathrm{measured}} = G * y_{\mathrm{quantum}} + C
 $$
 
 where
@@ -2336,10 +1875,7 @@ These transformed values constitute the final predicted measurements returned by
 In frequency-domain operation, the Hamiltonian eigenvalues
 
 $$
-E_1,
-E_2,
-\ldots,
-E_M
+E_1, E_2, \ldots, E_M
 $$
 
 are computed by diagonalization.
@@ -2347,32 +1883,13 @@ are computed by diagonalization.
 Allowed transition energies are obtained from pairwise eigenvalue differences,
 
 $$
-\Delta E_{ij}
-=
-
- E_i -
-
-E_j,
-\qquad
-i>j.
+\Delta E_{ij} = E_i - E_j, \qquad i>j.
 $$
 
 Each transition contributes a Gaussian peak to the simulated spectrum,
 
 $$
-S(f)
-=
-
-\sum_k
-\exp
-\left(
--
-
-\frac{
-(f-\Delta E_k)^2
-}
-{2\sigma_{\mathrm{instr}}^2}
-\right),
+S(f) = \sum_k \exp \left( - \frac{ (f-\Delta E_k)^2 } {2\sigma_{\mathrm{instr}}^2} \right)
 $$
 
 where
@@ -2386,13 +1903,7 @@ is the instrumental broadening parameter.
 The spectrum is normalized by its maximum value before the addition of a constant background level,
 
 $$
-S_{\mathrm{final}}(f)
-=
-
-B
-+
-\frac{S(f)}
-{\max S(f)},
+S_{\mathrm{final}}(f) = B + \frac{S(f)} {\max S(f)}
 $$
 
 where
@@ -2410,9 +1921,9 @@ denotes the background contribution.
 | Mathematical Symbol          | Description                 | Implementation Variable                     |                       |
 | ---------------------------- | --------------------------- | ------------------------------------------- | --------------------- |
 | $H$                          | Total Hamiltonian           | `H`                                         |                       |
-| $h_x,h_y,h_z$                | Local control fields        | `h_x`, `h_y`, `h_z`                         |                       |
+| $h_x h_y,h_z$                | Local control fields        | `h_x`, `h_y`, `h_z`                         |                       |
 | $g_{ij}$                     | Pairwise coupling strength  | `couplings`                                 |                       |
-| $\sigma_x,\sigma_y,\sigma_z$ | Pauli operators             | `qt.sigmax()`, `qt.sigmay()`, `qt.sigmaz()` |                       |
+| $\sigma_x \sigma_y,\sigma_z$ | Pauli operators             | `qt.sigmax()`, `qt.sigmay()`, `qt.sigmaz()` |                       |
 | $ \langle \psi_0\rangle$              | Initial quantum state                       | `psi0`                |
 | $ \langle\psi(t)\rangle$             | Time-evolved quantum state                  | `qt.sesolve` solution |
 | $\langle\sigma_z\rangle$     | Measured expectation values | `result.expect`                             |                       |
@@ -2448,7 +1959,7 @@ The symbolic representation is subsequently converted into a numerical matrix su
 If no user-defined initial state is supplied, the framework constructs a default product state
 
 $$
-|\psi_0\rangle,
+|\psi_0\rangle
 $$
 
 which serves as the starting point for quantum evolution.
@@ -2486,13 +1997,7 @@ The framework evolves the initial state according to either
 * **unitary evolution**, governed by the Schrödinger equation,
 
 $$
-i
-\frac{\partial}{\partial t}
-|\psi(t)\rangle
-=
-
-H
-|\psi(t)\rangle,
+i \frac{\partial}{\partial t} |\psi(t)\rangle = H |\psi(t)\rangle
 $$
 
 or
@@ -2508,7 +2013,7 @@ The choice between these two modes is controlled by the configuration parameters
 For each observable
 
 $$
-O_i,
+O_i
 $$
 
 the synthetic measurement at time
@@ -2520,30 +2025,13 @@ $$
 is computed as the quantum expectation value
 
 $$
-m_i(t)
-=
-
-\langle
-\psi(t)
-|
-O_i
-|
-\psi(t)
-\rangle.
+m_i(t) = \langle \psi(t) | O_i | \psi(t) \rangle.
 $$
 
 Collecting all observables over all sampling times produces the synthetic measurement matrix
 
 $$
-M
-=
-
-\begin{bmatrix}
-m_1(t_1) & \cdots & m_1(t_N) \
-m_2(t_1) & \cdots & m_2(t_N) \
-\vdots & \ddots & \vdots \
-m_K(t_1) & \cdots & m_K(t_N)
-\end{bmatrix},
+M = \begin{bmatrix} m_1(t_1) & \cdots & m_1(t_N) \ m_2(t_1) & \cdots & m_2(t_N) \ \vdots & \ddots & \vdots \ m_K(t_1) & \cdots & m_K(t_N) \end{bmatrix}
 $$
 
 where
@@ -2563,10 +2051,7 @@ Unlike the single-qubit synthetic generator, the current multi-qubit implementat
 Consequently, the returned measurements correspond directly to the expectation values predicted by the underlying quantum evolution,
 
 $$
-y_{\mathrm{synthetic}}
-=
-
-m(t),
+y_{\mathrm{synthetic}} = m(t)
 $$
 
 without an additional stochastic perturbation term.
@@ -2602,36 +2087,19 @@ Bayesian parameter estimation for the multi-qubit model follows the same framewo
 Unlike the Hydrogen and Single-Qubit models, the Multi-Qubit implementation employs a correlated multivariate Gaussian prior over the parameter vector,
 
 $$
-\boldsymbol{\theta}
-\sim
-\mathcal{N}
-(\mathbf{0}, \Sigma),
+\boldsymbol{\theta} \sim \mathcal{N} (\mathbf{0}, \Sigma)
 $$
 
 with covariance matrix
 
 $$
-\Sigma
-=
-0.1\,I
-+
-0.009\,J,
+\Sigma = 0.1\,I + 0.009\,J
 $$
 
 where \(I\) is the identity matrix and \(J\) is the matrix of all ones. The resulting log-prior is
 
 $$
-\log P(\boldsymbol{\theta})
-=
--\frac{1}{2}
-(\boldsymbol{\theta})^T
-\Sigma^{-1}
-\boldsymbol{\theta}
--
-\frac{1}{2}
-\log|\Sigma|
--
-\frac{n}{2}\log(2\pi).
+\log P(\boldsymbol{\theta}) = -\frac{1}{2} (\boldsymbol{\theta})^T \Sigma^{-1} \boldsymbol{\theta} - \frac{1}{2} \log|\Sigma| - \frac{n}{2}\log(2\pi).
 $$
 
 ### Likelihood Function
@@ -2639,14 +2107,7 @@ $$
 The predicted observables produced by the forward quantum simulation are flattened into a single vector and compared with the measured data under an additive Gaussian noise model. Assuming a constant noise standard deviation \(\sigma\), the log-likelihood is
 
 $$
-\log P(D\mid\boldsymbol{\theta})
-=
--\frac{1}{2}
-\left[
-\frac{\sum_i (y_i^{\mathrm{obs}}-y_i^{\mathrm{pred}})^2}{\sigma^2}
-+
-N\log(2\pi\sigma^2)
-\right].
+\log P(D\mid\boldsymbol{\theta}) = -\frac{1}{2} \left[ \frac{\sum_i (y_i^{\mathrm{obs}}-y_i^{\mathrm{pred}})^2}{\sigma^2} + N\log(2\pi\sigma^2) \right].
 $$
 
 The remainder of the Bayesian inference procedure, including posterior construction, MCMC sampling, burn-in removal, MAP estimation, and posterior mean computation, is identical to the methodology described for the Single-Qubit model.
@@ -2682,39 +2143,19 @@ Several output heads perform categorical prediction tasks, including domain iden
 For a classification problem with true class label (y) and predicted logits (\mathbf{z}), the cross-entropy loss is
 
 $$
-L_{\mathrm{CE}}
-=
-
-
-\log
-\left(
-\frac{\exp(z_y)}
-{\sum_j \exp(z_j)}
-\right).
+L_{\mathrm{CE}} = \log \left( \frac{\exp(z_y)} {\sum_j \exp(z_j)} \right).
 $$
 
 Equivalently,
 
 $$
-L_{\mathrm{CE}}
-=
-
-
-
-\sum_j
-y_j
-\log
-p_j,
+L_{\mathrm{CE}} = \sum_j y_j \log p_j
 $$
 
 where
 
 $$
-p_j
-=
-
-\frac{\exp(z_j)}
-{\sum_k \exp(z_k)}
+p_j = \frac{\exp(z_j)} {\sum_k \exp(z_k)}
 $$
 
 is the predicted probability obtained through the softmax transformation.
@@ -2742,23 +2183,13 @@ $$
 Applying the mask yields
 
 $$
-m_i
-(\hat{t}_i - t_i)^2.
+m_i (\hat{t}_i - t_i)^2.
 $$
 
 The overall masked regression loss is
 
 $$
-L_{\mathrm{reg}}
-=
-
-\frac{
-\sum_i
-m_i
-(\hat{t}_i - t_i)^2
-}{
-\sum_i m_i + \varepsilon
-},
+L_{\mathrm{reg}} = \frac{ \sum_i m_i (\hat{t}_i - t_i)^2 }{ \sum_i m_i + \varepsilon }
 $$
 
 where
@@ -2780,16 +2211,7 @@ Certain categorical outputs are relevant only for specific training examples.
 For these heads, a binary mask is applied after computing the per-sample cross-entropy loss,
 
 $$
-L_{\mathrm{masked}}
-=
-
-\frac{
-\sum_i
-m_i
-L_i
-}{
-\sum_i m_i + \varepsilon
-},
+L_{\mathrm{masked}} = \frac{ \sum_i m_i L_i }{ \sum_i m_i + \varepsilon }
 $$
 
 where
@@ -2808,29 +2230,7 @@ The complete training loss combines multiple classification losses together with
 Conceptually,
 
 $$
-L_{\mathrm{total}}
-=
-
-L_{\mathrm{domain}}
-+
-L_{\mathrm{action}}
-+
-L_{\mathrm{spectrum}}
-+
-L_{\mathrm{series}}
-+
-L_{\mathrm{evolution}}
-+
-L_{\mathrm{initial}}
-+
-L_{\mathrm{observable}}
-+
-L_{\mathrm{topology}}
-+
-L_{\mathrm{open}}
-+
-\lambda_{\mathrm{reg}}
-L_{\mathrm{reg}},
+L_{\mathrm{total}} = L_{\mathrm{domain}} + L_{\mathrm{action}} + L_{\mathrm{spectrum}} + L_{\mathrm{series}} + L_{\mathrm{evolution}} + L_{\mathrm{initial}} + L_{\mathrm{observable}} + L_{\mathrm{topology}} + L_{\mathrm{open}} + \lambda_{\mathrm{reg}} L_{\mathrm{reg}}
 $$
 
 where
@@ -2868,25 +2268,13 @@ denote the observed training values.
 The empirical mean is computed as
 
 $$
-\mu
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-x_i,
+\mu = \frac{1}{N} \sum_{i=1}^{N} x_i
 $$
 
 and the empirical standard deviation is
 
 $$
-\sigma
-=
-\sqrt{
-\frac{1}{N}
-\sum_{i=1}^{N}
-(x_i-\mu)^2
-}
-+
-10^{-8},
+\sigma = \sqrt{ \frac{1}{N} \sum_{i=1}^{N} (x_i-\mu)^2 } + 10^{-8}
 $$
 
 where the small constant
@@ -2906,9 +2294,7 @@ The resulting statistics are stored for each regression slot and serialized for 
 Given a regression value \(x\), the normalized quantity is obtained through z-score standardization,
 
 $$
-x_{\mathrm{norm}}
-=
-\frac{x-\mu}{\sigma},
+x_{\mathrm{norm}} = \frac{x-\mu}{\sigma}
 $$
 
 where
@@ -2934,12 +2320,7 @@ $$
 denotes the normalized prediction, the recovered physical value is
 
 $$
-x
-=
-x_{\mathrm{norm}}
-\,\sigma
-+
-\mu.
+x = x_{\mathrm{norm}} \,\sigma + \mu.
 $$
 
 The framework applies this transformation independently to both predicted and target regression values before computing evaluation metrics such as the mean absolute error (MAE).
@@ -2952,28 +2333,14 @@ Only regression slots that are active for a given sample contribute to the repor
 
 Let
 
-- $m_i \in \{0,1\}$ denotes the regression mask,
+- $m_i \in {0 1}$ denotes the regression mask,
 - $x_i$ denotes the de-normalized target,
 - $\hat{x}_i$ denotes the corresponding de-normalized prediction.
 
 The masked mean absolute error is
 
 $$
-\mathrm{MAE}
-=
-\frac{
-\sum_i
-m_i
-\left|
-\hat{x}_i
--
-x_i
-\right|
-}{
-\sum_i m_i
-+
-10^{-8}
-}.
+\mathrm{MAE} = \frac{ \sum_i m_i \left| \hat{x}_i - x_i \right| }{ \sum_i m_i + 10^{-8} }.
 $$
 
 Inactive regression slots therefore do not influence the reported evaluation statistics.
@@ -3003,7 +2370,7 @@ The Scientific AI Framework employs a character-level neural architecture to map
 Let an input query be represented as a sequence of characters
 
 $$
-c_1,c_2,\ldots,c_T,
+c_1,c_2,\ldots,c_T
 $$
 
 where
@@ -3023,15 +2390,13 @@ Each character is mapped to an integer index through a vocabulary lookup and sub
 For a vocabulary of size
 
 $$
-V,
+V
 $$
 
 each character index is transformed into an embedding
 
 $$
-\mathbf{e}_t
-\in
-\mathbb{R}^{d},
+\mathbf{e}_t \in \mathbb{R}^{d}
 $$
 
 where
@@ -3045,18 +2410,13 @@ is the embedding dimension.
 Collectively, the embedding matrix is
 
 $$
-E
-\in
-\mathbb{R}^{V \times d},
+E \in \mathbb{R}^{V \times d}
 $$
 
 and the embedded input sequence is
 
 $$
-\mathbf{e}_1,
-\mathbf{e}_2,
-\ldots,
-\mathbf{e}_T.
+\mathbf{e}_1, \mathbf{e}_2, \ldots, \mathbf{e}_T.
 $$
 
 The embedding vectors are learned jointly with the remainder of the neural network during training.
@@ -3070,13 +2430,7 @@ The embedded sequence is processed sequentially by a recurrent neural network.
 At each time step,
 
 $$
-\mathbf{h}_t
-=
-f
-\left(
-\mathbf{e}_t,
-\mathbf{h}_{t-1}
-\right),
+\mathbf{h}_t = f \left( \mathbf{e}_t, \mathbf{h}_{t-1} \right)
 $$
 
 where
@@ -3115,9 +2469,7 @@ This shared representation is subsequently supplied to multiple prediction heads
 The encoder output is transformed through a feed-forward neural network,
 
 $$
-\mathbf{z}
-=
-g(\mathbf{h}_T),
+\mathbf{z} = g(\mathbf{h}_T)
 $$
 
 where
@@ -3148,20 +2500,13 @@ Separate output heads predict categorical quantities such as
 For a classification head with logits
 
 $$
-\mathbf{s},
+\mathbf{s}
 $$
 
 the predicted probabilities are obtained through the softmax transformation,
 
 $$
-P(y=i)
-=
-\frac{
-\exp(s_i)
-}{
-\sum_j
-\exp(s_j)
-}.
+P(y=i) = \frac{ \exp(s_i) }{ \sum_j \exp(s_j) }.
 $$
 
 The predicted class corresponds to the maximum-probability category.
@@ -3175,9 +2520,7 @@ Continuous physical parameters are predicted through dedicated regression output
 Let
 
 $$
-\mathbf{r}
-=
-(r_1,r_2,\ldots,r_K)
+\mathbf{r} = (r_1,r_2,\ldots,r_K)
 $$
 
 denote the vector of regression predictions for
@@ -3217,7 +2560,7 @@ The Scientific AI Framework employs a multi-task neural architecture that simult
 Given an input query represented by tokenized embeddings
 
 $$
-\mathbf{x} = (x_1, x_2, \ldots, x_n),
+\mathbf{x} = (x_1, x_2, \ldots, x_n)
 $$
 
 the transformer encoder produces a contextual representation
@@ -3236,14 +2579,7 @@ From this shared representation, independent output heads predict:
 Formally,
 
 $$
-\mathbf{h}
-\longrightarrow
-\left(
-\hat{d},
-\hat{a},
-\hat{\mathbf{c}},
-\hat{\mathbf{r}}
-\right),
+\mathbf{h} \longrightarrow \left( \hat{d}, \hat{a}, \hat{\mathbf{c}}, \hat{\mathbf{r}} \right)
 $$
 
 where
@@ -3260,10 +2596,7 @@ The shared encoder allows information learned from one task to improve represent
 Instead of constructing a different regression head for every scientific model, the framework defines a single global regression vector
 
 $$
-\hat{\mathbf{r}}
-=
-
-(\hat{r}_1,\hat{r}_2,\ldots,\hat{r}_S),
+\hat{\mathbf{r}} = (\hat{r}_1,\hat{r}_2,\ldots,\hat{r}_S)
 $$
 
 where $S$ is the total number of supported regression slots across all domains.
@@ -3281,12 +2614,7 @@ Consequently, many components of the global regression vector are intentionally 
 To prevent irrelevant parameters from influencing optimization, each sample is associated with a binary regression mask
 
 $$
-\mathbf{m}
-=
-
-(m_1,m_2,\ldots,m_S),
-\qquad
-m_i \in {0,1}.
+\mathbf{m} = (m_1,m_2,\ldots,m_S), \qquad m_i \in \{0,1\}.
 $$
 
 The mask indicates whether regression slot $i$ is applicable to the current scientific intent.
@@ -3295,14 +2623,12 @@ The masked mean squared error is
 
 $$
 L_{\mathrm{reg}} = \frac{\sum_{i=1}^{S} m_i (\hat{r}_i - r_i)^2}{\sum_{i=1}^{S} m_i}
-,
 $$
 
 or, for batched training,
 
 $$
-L_{\mathrm{reg}} = \frac{\sum_{b} \sum_{i} m_{b,i} (\hat{r}_{b,i} - r_{b,i})^2}{\sum_{b} \sum_{i} m_{b,i}}
-.
+L_{\mathrm{reg}} = \frac{\sum_{b} \sum_{i} m_{b,i} (\hat{r}_{b,i} - r_{b,i})^2}{\sum_{b} \sum_{i} m_{b,i}} .
 $$
 
 Only active regression slots contribute to the optimization objective, while inactive slots produce zero loss and zero gradient.
@@ -3331,18 +2657,7 @@ Let
 The total objective may be expressed as
 
 $$
-L_{\mathrm{total}}
-=
-
-L_{\mathrm{domain}}
-+
-L_{\mathrm{action}}
-+
-\sum_k
-L_{\mathrm{cat}}^{(k)}
-+
-\lambda_{\mathrm{reg}}
-L_{\mathrm{reg}},
+L_{\mathrm{total}} = L_{\mathrm{domain}} + L_{\mathrm{action}} + \sum_k L_{\mathrm{cat}}^{(k)} + \lambda_{\mathrm{reg}} L_{\mathrm{reg}}
 $$
 
 where $\lambda_{\mathrm{reg}}$ controls the relative contribution of the regression task.
@@ -3368,14 +2683,7 @@ Large gradients may occasionally arise during optimization, particularly in deep
 To improve numerical stability, the framework clips parameter gradients according to
 
 $$
-\mathbf{g}
-\leftarrow
-\mathbf{g}
-\cdot
-\min\left(
-1,
-\frac{\tau}{|\mathbf{g}|}
-\right),
+\mathbf{g} \leftarrow \mathbf{g} \cdot \min\left( 1, \frac{\tau}{|\mathbf{g}|} \right)
 $$
 
 where
@@ -3391,14 +2699,7 @@ This operation preserves gradient direction while preventing excessively large p
 During evaluation, regression predictions are transformed back into their corresponding physical units before computing performance metrics such as the mean absolute error (MAE),
 
 $$
-\mathrm{MAE}
-=
-
-\frac{1}{N}
-\sum_{i=1}^{N}
-\left|
-\hat{r}_i-r_i
-\right|.
+\mathrm{MAE} = \frac{1}{N} \sum_{i=1}^{N} \left| \hat{r}_i-r_i \right|.
 $$
 
 Because these computations are detached from the computational graph, they do not influence optimization and serve solely as interpretable measures of predictive accuracy.
@@ -3430,19 +2731,13 @@ Numerical Results
 Let the user query be represented as a sequence of tokens
 
 $$
-\mathbf{x}
-=
-
-(x_1,x_2,\ldots,x_n).
+\mathbf{x} = (x_1,x_2,\ldots,x_n).
 $$
 
 The transformer encoder computes contextual embeddings
 
 $$
-\mathbf{h}
-=
-
-f_{\mathrm{Transformer}}(\mathbf{x}),
+\mathbf{h} = f_{\mathrm{Transformer}}(\mathbf{x})
 $$
 
 from which the prediction heads estimate
@@ -3455,10 +2750,7 @@ from which the prediction heads estimate
 Mathematically,
 
 $$
-(\hat{d},\hat{a},\hat{\mathbf{c}},\hat{\boldsymbol{\theta}})
-=
-
-g(\mathbf{h}),
+(\hat{d},\hat{a},\hat{\mathbf{c}},\hat{\boldsymbol{\theta}}) = g(\mathbf{h})
 $$
 
 where
@@ -3471,9 +2763,7 @@ where
 The neural network therefore performs a structured mapping
 
 $$
-\mathbf{x}
-\longmapsto
-(\hat{d},\hat{a},\hat{\boldsymbol{\theta}}).
+\mathbf{x} \longmapsto (\hat{d},\hat{a},\hat{\boldsymbol{\theta}}).
 $$
 
 ## 13.2 ScientificIntent Representation
@@ -3481,13 +2771,7 @@ $$
 The predicted quantities are assembled into a structured object,
 
 $$
-\mathcal{I}
-=
-
-(\hat{d},
-\hat{a},
-\hat{\mathbf{c}},
-\hat{\boldsymbol{\theta}}),
+\mathcal{I} = (\hat{d}, \hat{a}, \hat{\mathbf{c}}, \hat{\boldsymbol{\theta}})
 $$
 
 referred to as the **ScientificIntent**.
@@ -3499,22 +2783,13 @@ This representation serves as the interface between language understanding and s
 Based on the predicted domain and action, the framework dispatches execution to the corresponding scientific module,
 
 $$
-\mathcal{E}
-=
-
-\Phi(\mathcal{I}),
+\mathcal{E} = \Phi(\mathcal{I})
 $$
 
 where
 
 $$
-\Phi :
-\mathcal{I}
-\rightarrow
-{\text{Hydrogen},
-\text{Single-Qubit},
-\text{Multi-Qubit},
-\ldots}
+\Phi : \mathcal{I} \rightarrow {\text{Hydrogen}, \text{Single-Qubit}, \text{Multi-Qubit}, \ldots}
 $$
 
 denotes the routing operation.
@@ -3526,10 +2801,7 @@ Each executor encapsulates algorithms specific to its scientific domain while sh
 For forward simulation tasks, the executor evaluates a deterministic mathematical model
 
 $$
-\mathbf{y}
-=
-
-f(\hat{\boldsymbol{\theta}}),
+\mathbf{y} = f(\hat{\boldsymbol{\theta}})
 $$
 
 where
@@ -3553,16 +2825,13 @@ When parameter estimation is requested, the executor instead evaluates a statist
 Given observed data
 
 $$
-D,
+D
 $$
 
 the executor computes or samples from the posterior distribution
 
 $$
-P(\boldsymbol{\theta}\mid D)
-\propto
-P(D\mid\boldsymbol{\theta})
-P(\boldsymbol{\theta}),
+P(\boldsymbol{\theta}\mid D) \propto P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta})
 $$
 
 using algorithms such as Markov Chain Monte Carlo (MCMC).
@@ -3576,9 +2845,7 @@ An important architectural principle of the framework is the separation between 
 The transformer-based neural network approximates
 
 $$
-\mathbf{x}
-\longmapsto
-\hat{\boldsymbol{\theta}},
+\mathbf{x} \longmapsto \hat{\boldsymbol{\theta}}
 $$
 
 mapping natural language into structured scientific parameters.
@@ -3586,9 +2853,7 @@ mapping natural language into structured scientific parameters.
 The domain executor subsequently evaluates
 
 $$
-\hat{\boldsymbol{\theta}}
-\longmapsto
-f(\hat{\boldsymbol{\theta}}),
+\hat{\boldsymbol{\theta}} \longmapsto f(\hat{\boldsymbol{\theta}})
 $$
 
 or performs Bayesian inference based on those parameters.
@@ -3600,15 +2865,7 @@ Consequently, the neural network does **not** replace the underlying physical mo
 The complete execution pipeline may therefore be summarized as the composition
 
 $$
-\boxed{
-\mathbf{x}
-;\xrightarrow{;\text{Transformer};}
-(\hat{d},\hat{a},\hat{\boldsymbol{\theta}})
-;\xrightarrow{;\text{ScientificIntent};}
-\mathcal{E}
-;\xrightarrow{;\text{Forward Model or Bayesian Inference};}
-\mathbf{y}
-}
+\boxed{ \mathbf{x} ;\xrightarrow{;\text{Transformer};} (\hat{d},\hat{a},\hat{\boldsymbol{\theta}}) ;\xrightarrow{;\text{ScientificIntent};} \mathcal{E} ;\xrightarrow{;\text{Forward Model or Bayesian Inference};} \mathbf{y} }
 $$
 
 where the first stage performs learned language understanding and parameter prediction, while the final stage executes deterministic or probabilistic scientific computations using domain-specific mathematical models.
@@ -3622,41 +2879,25 @@ The mathematical models and learning algorithms employed in the Scientific AI Fr
 For regression and Bayesian inference tasks, observational errors are frequently modeled as additive Gaussian noise. Given a forward model
 
 $$
-y = f(\boldsymbol{\theta}),
+y = f(\boldsymbol{\theta})
 $$
 
 the observed data are assumed to satisfy
 
 $$
-y_{\mathrm{obs}}
-=
-
-f(\boldsymbol{\theta})
-+
-\varepsilon,
+y_{\mathrm{obs}} = f(\boldsymbol{\theta}) + \varepsilon
 $$
 
 where
 
 $$
-\varepsilon
-\sim
-\mathcal{N}(0,\sigma^2).
+\varepsilon \sim \mathcal{N}(0,\sigma^2).
 $$
 
 Under this assumption, the likelihood function takes the form
 
 $$
-P(D \mid \boldsymbol{\theta})
-\propto
-\exp\left(
--\frac{1}{2\sigma^2}
-\sum_i
-\left[
-y_i -
-f_i(\boldsymbol{\theta})
-\right]^2
-\right).
+P(D \mid \boldsymbol{\theta}) \propto \exp\left( -\frac{1}{2\sigma^2} \sum_i \left[ y_i - f_i(\boldsymbol{\theta}) \right]^2 \right).
 $$
 
 This assumption is appropriate for many measurement processes but may not accurately represent all experimental noise sources.
@@ -3668,11 +2909,7 @@ Several probabilistic components implicitly assume conditional independence.
 For example, given model parameters $\boldsymbol{\theta}$,
 
 $$
-P(D \mid \boldsymbol{\theta})
-=
-
-\prod_{i=1}^{N}
-P(d_i \mid \boldsymbol{\theta}),
+P(D \mid \boldsymbol{\theta}) = \prod_{i=1}^{N} P(d_i \mid \boldsymbol{\theta})
 $$
 
 where $d_i$ denotes an individual observation.
@@ -3707,20 +2944,13 @@ Bayesian inference procedures approximate posterior distributions using a finite
 If
 
 $$
-{\boldsymbol{\theta}^{(1)},
-\boldsymbol{\theta}^{(2)},
-\ldots,
-\boldsymbol{\theta}^{(M)}}
+{\boldsymbol{\theta}^{(1)}, \boldsymbol{\theta}^{(2)}, \ldots, \boldsymbol{\theta}^{(M)}}
 $$
 
 denotes the sampled Markov chain, posterior expectations are estimated as
 
 $$
-\mathbb{E}[g(\boldsymbol{\theta})]
-\approx
-\frac{1}{M}
-\sum_{k=1}^{M}
-g(\boldsymbol{\theta}^{(k)}).
+\mathbb{E}[g(\boldsymbol{\theta})] \approx \frac{1}{M} \sum_{k=1}^{M} g(\boldsymbol{\theta}^{(k)}).
 $$
 
 The approximation improves as the number of effectively independent samples increases. In practice, convergence diagnostics, burn-in selection, and chain mixing influence estimation accuracy.
@@ -3790,15 +3020,7 @@ The Scientific AI Framework integrates techniques from machine learning, Bayesia
 At the highest level, the framework performs the mapping
 
 $$
-\boxed{
-\text{Natural Language}
-;\longrightarrow;
-\text{Structured Scientific Intent}
-;\longrightarrow;
-\text{Mathematical Model}
-;\longrightarrow;
-\text{Numerical Results}
-}
+\boxed{ \text{Natural Language} ;\longrightarrow; \text{Structured Scientific Intent} ;\longrightarrow; \text{Mathematical Model} ;\longrightarrow; \text{Numerical Results} }
 $$
 
 where the first stage is data-driven and the latter stages are governed by established scientific principles.
@@ -3808,15 +3030,7 @@ where the first stage is data-driven and the latter stages are governed by estab
 Unknown model parameters are estimated through Bayes' theorem,
 
 $$
-P(\boldsymbol{\theta}\mid D)
-=
-
-\frac{
-P(D\mid\boldsymbol{\theta})
-P(\boldsymbol{\theta})
-}{
-P(D)
-},
+P(\boldsymbol{\theta}\mid D) = \frac{ P(D\mid\boldsymbol{\theta}) P(\boldsymbol{\theta}) }{ P(D) }
 $$
 
 combining prior information with observed data to obtain posterior probability distributions.
@@ -3828,10 +3042,7 @@ When analytical solutions are unavailable, posterior distributions are approxima
 Scientific predictions are generated through deterministic forward models of the form
 
 $$
-\mathbf{y}
-=
-
-f(\boldsymbol{\theta}),
+\mathbf{y} = f(\boldsymbol{\theta})
 $$
 
 where the parameter vector $\boldsymbol{\theta}$ specifies the physical system and $f$ represents the corresponding mathematical model.
@@ -3843,19 +3054,7 @@ Examples implemented in the framework include hydrogen spectral synthesis and qu
 Hydrogen emission spectra are represented as superpositions of Gaussian line profiles,
 
 $$
-I(E)
-=
-
-B
-+
-\sum_i
-A_i
-\exp\left(
--
-
-\frac{(E-E_i)^2}
-{2\sigma^2}
-\right),
+I(E) = B + \sum_i A_i \exp\left( - \frac{(E-E_i)^2} {2\sigma^2} \right)
 $$
 
 where transition energies, amplitudes, instrumental broadening, and background determine the resulting spectrum.
@@ -3867,23 +3066,13 @@ The same mathematical model is used both for synthetic data generation and Bayes
 Single-qubit and multi-qubit systems evolve according to the Schrödinger equation,
 
 $$
-i\hbar
-\frac{\partial}{\partial t}
-\psi(t)
-=
-
-H
-\psi(t),
+i\hbar \frac{\partial}{\partial t} \psi(t) = H \psi(t)
 $$
 
 whose formal solution is
 
 $$
-\psi(t)
-=
-
-e^{-iHt/\hbar}
-\psi(0).
+\psi(t) = e^{-iHt/\hbar} \psi(0).
 $$
 
 Observable quantities are obtained from expectation values or measurement probabilities derived from the evolved quantum state.
@@ -3906,18 +3095,7 @@ Regression parameters are represented using a global slot vector with masked opt
 Training jointly optimizes classification and regression objectives through a combined loss function,
 
 $$
-L_{\mathrm{total}}
-=
-
-L_{\mathrm{domain}}
-+
-L_{\mathrm{action}}
-+
-\sum_k
-L_{\mathrm{cat}}^{(k)}
-+
-\lambda_{\mathrm{reg}}
-L_{\mathrm{reg}}.
+L_{\mathrm{total}} = L_{\mathrm{domain}} + L_{\mathrm{action}} + \sum_k L_{\mathrm{cat}}^{(k)} + \lambda_{\mathrm{reg}} L_{\mathrm{reg}}.
 $$
 
 Continuous targets are normalized during optimization to improve numerical stability, while denormalization is reserved for reporting interpretable evaluation metrics.
@@ -3929,15 +3107,7 @@ The neural network predicts structured scientific parameters but does not itself
 Instead, execution proceeds conceptually as
 
 $$
-\boxed{
-\mathbf{x}
-;\xrightarrow{;\text{Neural Intent Detector};}
-\mathcal{I}
-;\xrightarrow{;\text{Domain Executor};}
-f(\boldsymbol{\theta})
-;\xrightarrow{;}
-\text{Scientific Output}
-}
+\boxed{ \mathbf{x} ;\xrightarrow{;\text{Neural Intent Detector};} \mathcal{I} ;\xrightarrow{;\text{Domain Executor};} f(\boldsymbol{\theta}) ;\xrightarrow{;} \text{Scientific Output} }
 $$
 
 where:
